@@ -82,7 +82,7 @@ winpops=window.open(popurl,"","width=520,height=520,scrollbars")
 </tr>
 </table><br />
 <table class="copyright" width="90%"><tr>
-<td width="25%" align="center">Powered by <a href="http://dragon.se7enet.com/dev.php" target="_new">Dragon Knight</a></td><td width="25%" align="center">&copy; 2003-2004 by renderse7en</td><td width="25%" align="center">{{totaltime}} Seconds, {{numqueries}} Queries</td><td width="25%" align="center">Version {{version}} {{build}}</td>
+<td width="25%" align="center">Powered by <a href="http://dragon.se7enet.com/dev.php" target="_new">Dragon Knight</a></td><td width="25%" align="center">&copy; 2003-2006 by renderse7en</td><td width="25%" align="center">{{totaltime}} Seconds, {{numqueries}} Queries</td><td width="25%" align="center">Version {{version}} {{build}}</td>
 </tr></table>
 </center></body>
 </html>

@@ -44,6 +44,7 @@ function register() { // Register a new account.
         if (mysql_num_rows($emailquery) > 0) { $errors++; $errorlist .= "Email already taken - unique email address required.<br />"; }
         
         // Process password.
+        if (trim($password1) == "") { $errors++; $errorlist .= "Password field is required.<br />"; }
         if (preg_match("/[^A-z0-9_\-]/", $password1)==1) { $errors++; $errorlist .= "Password must be alphanumeric.<br />"; } // Thanks to "Carlos Pires" from php.net!
         if ($password1 != $password2) { $errors++; $errorlist .= "Passwords don't match.<br />"; }
         $password = md5($password1);

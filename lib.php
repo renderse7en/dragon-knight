@@ -2,7 +2,7 @@
 
 $starttime = getmicrotime();
 $numqueries = 0;
-$version = "1.1.10b";
+$version = "1.1.11";
 $build = "";
 
 // Handling for servers with magic_quotes turned on.
@@ -15,8 +15,11 @@ if (get_magic_quotes_gpc()) {
 
 }
 $_POST = array_map('addslashes_deep', $_POST);
+$_POST = array_map('html_deep', $_POST);
 $_GET = array_map('addslashes_deep', $_GET);
+$_GET = array_map('html_deep', $_GET);
 $_COOKIE = array_map('addslashes_deep', $_COOKIE);
+$_COOKIE = array_map('html_deep', $_COOKIE);
 
 function stripslashes_deep($value) {
     
@@ -32,6 +35,15 @@ function addslashes_deep($value) {
    $value = is_array($value) ?
                array_map('addslashes_deep', $value) :
                addslashes($value);
+   return $value;
+   
+}
+
+function html_deep($value) {
+    
+   $value = is_array($value) ?
+               array_map('html_deep', $value) :
+               htmlspecialchars($value);
    return $value;
    
 }

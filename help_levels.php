@@ -135,7 +135,7 @@ while ($itemsrow = mysql_fetch_array($itemsquery)) {
 Experience points listed are total values up until that point. All other values are just the new amount that you gain for each level.
 <br /><br />
 <table class="copyright" width="100%"><tr>
-<td width="50%" align="center">Powered by <a href="http://dragon.se7enet.com/dev.php" target="_new">Dragon Knight</a></td><td width="50%" align="center">&copy; 2003-2004 by renderse7en</td>
+<td width="50%" align="center">Powered by <a href="http://dragon.se7enet.com/dev.php" target="_new">Dragon Knight</a></td><td width="50%" align="center">&copy; 2003-2006 by renderse7en</td>
 </tr></table>
 </body>
 </html>
