@@ -64,6 +64,10 @@ function opencharpopup(){
 var popurl="index.php?do=showchar"
 winpops=window.open(popurl,"","width=210,height=500,scrollbars")
 }
+function openmappopup(){
+var popurl="index.php?do=showmap"
+winpops=window.open(popurl,"","width=520,height=520,scrollbars")
+}
 </script>
 </head>
 <body><center>

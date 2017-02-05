@@ -10,6 +10,7 @@ if (isset($_GET["page"])) {
     if ($page == 2) { second(); }
     elseif ($page == 3) { third(); }
     elseif ($page == 4) { fourth(); }
+    elseif ($page == 5) { fifth(); }
     else { first(); }
 } else { first(); }
 
@@ -766,7 +767,12 @@ $page = <<<END
 Your admin account was created successfully. Installation is complete.<br /><br />
 Be sure to delete install.php from your Dragon Knight directory for security purposes.<br /><br />
 You are now ready to <a href="index.php">play the game</a>. Note that you must log in through the public section before being allowed into the control panel. Once logged in, an "Admin" link will appear in the Functions box of the left sidebar panel.<br /><br/>
-Thank you for using Dragon Knight!
+Thank you for using Dragon Knight!<br /><br />-----<br /><br />
+<b>Optional:</b> Dragon Knight is a free product, and does not require registration of any sort. However, there is an 
+optional "call home" function in the installer, which notifies the author of your game installation. The ONLY information 
+transmitted with this function is the URL to your game. This is included mainly to satisfy the author's curiosity about
+how many copies of the game are being installed and used. If you choose to submit your URL to the author, please
+<a href="install.php?page=5">click here</a>.
 </body>
 </html>
 END;
@@ -774,6 +780,29 @@ END;
     echo $page;
     die();
 
-}    
+}
+
+function fifth() { // Call Home function.
+    
+    $url = "http://".$_SERVER["SERVER_NAME"].$_SERVER["PHP_SELF"];
+    if (mail("jamin@se7enet.com", "Dragon Knight Call Home", "$url") != true) { die("Dragon Knight was unable to send your URL. Please go back and try again, or just continue on to <a href=\"index.php\">the game</a>."); }
+    
+$page = <<<END
+<html>
+<head>
+<title>Dragon Knight Installation</title>
+</head>
+<body>
+<b>Dragon Knight Installation: Page Five</b><br /><br />
+Thank you for submitting your URL!<br /><br />
+You are now ready to <a href="index.php">play the game</a>. Note that you must log in through the public section before being allowed into the control panel. Once logged in, an "Admin" link will appear in the Functions box of the left sidebar panel.
+</body>
+</html>
+END;
+    
+    echo $page;
+    die();
+    
+}
 
 ?>                                                                           

@@ -5,7 +5,8 @@ $template = <<<THEVERYENDOFYOU
 <tr><td>
 Currently: {{currentaction}}<br />
 Latitude: {{latitude}}<br />
-Longitude: {{longitude}}<br /><br />
+Longitude: {{longitude}}<br />
+<a href="javascript:openmappopup()">View Map</a><br /><br />
 <form action="index.php?do=move" method="post">
 <center>
 <input name="north" type="submit" value="North" /><br />

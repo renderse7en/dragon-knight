@@ -1,5 +1,6 @@
 <?php // index.php :: Primary program script, evil alien overlord, you decide.
 
+if (file_exists('install.php')) { die("Please delete <b>install.php</b> from your Dragon Knight directory before continuing."); }
 include('lib.php');
 include('login.php');
 $link = opendb();
@@ -227,7 +228,7 @@ function showmap() {
     . "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n";
     
     $page = $xml . gettemplate("minimal");
-    $array = array("content"=>"Map coming soon.", "title"=>"Map");
+    $array = array("content"=>"<center><img src=\"images/map.gif\" alt=\"Map\" /></center>", "title"=>"Map");
     echo parsetemplate($page, $array);
     die();
     
