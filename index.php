@@ -253,7 +253,7 @@ function babblebox() {
     
     global $userrow;
     
-    if (isset($_POST["submit"])) {
+    if (isset($_POST["babble"])) {
         $safecontent = makesafe($_POST["babble"]);
         if ($safecontent == "" || $safecontent == " ") { //blank post. do nothing.
         } else { $insert = doquery("INSERT INTO {{table}} SET id='',posttime=NOW(),author='".$userrow["charname"]."',babble='$safecontent'", "babble"); }

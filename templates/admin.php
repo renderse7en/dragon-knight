@@ -54,7 +54,7 @@ a:hover {
 <b><u>DK Administration</u></b><br /><br />
 <b>Links:</b><br />
 <a href="admin.php">Admin Home</a><br />
-<a href="../index.php">Game Home</a><br /><br />
+<a href="index.php">Game Home</a><br /><br />
 <b>Primary Data:</b><br />
 <a href="admin.php?do=main">Main Settings</a><br />
 <a href="admin.php?do=news">Add News Post</a><br />
