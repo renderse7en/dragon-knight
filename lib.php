@@ -1,11 +1,15 @@
 <?php // lib.php :: Common functions used throughout the program.
 
+$app_path = "/path/to/your/dkfolder/"; // <-- CHANGE THIS TO YOUR ACTUAL FOLDER PATH.
+                                       //     Remember the trailing slash.
+                                       //     And be sure to use double backslashes if you're on Windows ("c:\\folder\\blah\\").
 $starttime = getmicrotime();
 $numqueries = 0;
 
 function opendb() { // Open database connection.
 
-    include('config.php');
+    global $app_path;
+    include($app_path . 'config.php');
     extract($dbsettings);
     $link = mysql_connect($server, $user, $pass) or die(mysql_error());
     mysql_select_db($name) or die(mysql_error());
@@ -15,7 +19,8 @@ function opendb() { // Open database connection.
 
 function doquery($query, $table) { // Something of a tiny little database abstraction layer.
     
-    include('config.php');
+    global $app_path;
+    include($app_path . 'config.php');
     global $numqueries;
     $sqlquery = mysql_query(str_replace("{{table}}", $dbsettings["prefix"] . "_" . $table, $query)) or die(mysql_error());
     $numqueries++;
@@ -91,7 +96,8 @@ function my_htmlspecialchars($text) { // Thanks to "etymxris at yahoo dot com" f
 
 function display($content, $title, $topnav=true, $leftnav=true, $rightnav=true, $badstart=false) { // Finalize page and output to browser.
     
-    include('config.php');
+    global $app_path;
+    include($app_path . 'config.php');
     global $numqueries, $userrow, $controlrow;
     if (!isset($controlrow)) {
         $controlquery = doquery("SELECT * FROM {{table}} WHERE id='1' LIMIT 1", "control");

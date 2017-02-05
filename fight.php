@@ -73,10 +73,10 @@ function fight() { // One big long function that determines the outcome of the f
                 }
             }
             if ($userrow["currentmonstersleep"] == 0) { // Only do this if the monster is awake.
-                $tohit = ceil(rand($monsterrow["maxdam"],(($monsterrow["maxdam"]/6)*3)));
+                $tohit = ceil(rand((($monsterrow["maxdam"]/6)*3),$monsterrow["maxdam"]));
                 if ($userrow["difficulty"] == 2) { $tohit = ceil($tohit * $controlrow["diff2mod"]); }
                 if ($userrow["difficulty"] == 3) { $tohit = ceil($tohit * $controlrow["diff3mod"]); }
-                $toblock = ceil(rand($userrow["defensepower"],$userrow["defensepower"]*.75)/4);
+                $toblock = ceil(rand($userrow["defensepower"]*.75,$userrow["defensepower"])/4);
                 $tododge = rand(1,150);
                 if ($tododge <= sqrt($userrow["dexterity"])) {
                     $tohit = 0; $pagearray["monsterturn"] .= "You dodge the monster's attack. No damage has been scored.<br />";
@@ -235,10 +235,10 @@ function fight() { // One big long function that determines the outcome of the f
             }
         }
         if ($userrow["currentmonstersleep"] == 0) { // Only do this if the monster is awake.
-            $tohit = ceil(rand($monsterrow["maxdam"],(($monsterrow["maxdam"]/6)*3)));
+            $tohit = ceil(rand((($monsterrow["maxdam"]/6)*3)),$monsterrow["maxdam"]);
             if ($userrow["difficulty"] == 2) { $tohit = ceil($tohit * $controlrow["diff2mod"]); }
             if ($userrow["difficulty"] == 3) { $tohit = ceil($tohit * $controlrow["diff3mod"]); }
-            $toblock = ceil(rand($userrow["defensepower"],$userrow["defensepower"]*.75)/4);
+            $toblock = ceil(rand($userrow["defensepower"]*.75,$userrow["defensepower"])/4);
             $tododge = rand(1,150);
             if ($tododge <= sqrt($userrow["dexterity"])) {
                 $tohit = 0; $pagearray["monsterturn"] .= "You dodge the monster's attack. No damage has been scored.<br />";

@@ -10,7 +10,7 @@ $dbsettings = Array(
 
 // These are used for display purposes only. Technically you could change them, but it's not going to
 // do anything special. And I'd prefer if you didn't, just to keep things all nice and standardized.
-$version = "1.0.1";
+$version = "1.0.2";
 $build = "";
 
 ?>

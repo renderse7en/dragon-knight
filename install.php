@@ -15,10 +15,7 @@ if (isset($_GET["page"])) {
 } else { first(); }
 
 // Thanks to Predrag Supurovic from php.net for this function!
-function dobatch ($p_query, $p_transaction_safe = true) {
-  if ($p_transaction_safe) {
-     $p_query = 'START TRANSACTION;' . $p_query . '; COMMIT;';
-   };
+function dobatch ($p_query) {
   $query_split = preg_split ("/[;]+/", $p_query);
   foreach ($query_split as $command_line) {
    $command_line = trim($command_line);
