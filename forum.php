@@ -1,7 +1,7 @@
 <?php // forum.php :: Internal forums script for the game.
 
 include('lib.php');
-include('login.php');
+include('cookies.php');
 $link = opendb();
 $userrow = checkcookies();
 if ($userrow == false) { display("The forum is for registered players only.", "Forum"); die(); }
