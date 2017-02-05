@@ -2,7 +2,7 @@
 
 $starttime = getmicrotime();
 $numqueries = 0;
-$version = "1.1.10a";
+$version = "1.1.10b";
 $build = "";
 
 // Handling for servers with magic_quotes turned on.
@@ -31,7 +31,7 @@ function addslashes_deep($value) {
     
    $value = is_array($value) ?
                array_map('addslashes_deep', $value) :
-               stripslashes($value);
+               addslashes($value);
    return $value;
    
 }
