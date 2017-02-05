@@ -2,8 +2,27 @@
 
 $starttime = getmicrotime();
 $numqueries = 0;
-$version = "1.1.7";
+$version = "1.1.8";
 $build = "";
+
+// Handling for servers with magic_quotes turned on.
+// Example from php.net.
+if (get_magic_quotes_gpc()) {
+   function stripslashes_deep($value)
+   {
+       $value = is_array($value) ?
+                   array_map('stripslashes_deep', $value) :
+                   stripslashes($value);
+
+       return $value;
+   }
+
+   $_POST = array_map('stripslashes_deep', $_POST);
+   $_GET = array_map('stripslashes_deep', $_GET);
+   $_COOKIE = array_map('stripslashes_deep', $_COOKIE);
+}
+foreach($_POST as $a=>$b) { $_POST[$a] = addslashes($b); }
+foreach($_GET as $a=>$b) { $_GET[$a] = addslashes($b); }
 
 function opendb() { // Open database connection.
 
@@ -159,7 +178,7 @@ function display($content, $title, $topnav=true, $leftnav=true, $rightnav=true, 
         if ($userrow["longitude"] < 0) { $userrow["longitude"] = $userrow["longitude"] * -1 . "W"; } else { $userrow["longitude"] .= "E"; }
         $userrow["experience"] = number_format($userrow["experience"]);
         $userrow["gold"] = number_format($userrow["gold"]);
-        if ($userrow["authlevel"] == 1) { $userrow["adminlink"] = "<a href=\"admin/admin.php\">Admin</a><br />"; } else { $userrow["adminlink"] = ""; }
+        if ($userrow["authlevel"] == 1) { $userrow["adminlink"] = "<a href=\"admin.php\">Admin</a><br />"; } else { $userrow["adminlink"] = ""; }
         
         // HP/MP/TP bars.
         $stathp = ceil($userrow["currenthp"] / $userrow["maxhp"] * 100);

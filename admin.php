@@ -1,7 +1,7 @@
 <?php // admin.php :: primary administration script.
 
-include('../lib.php');
-include('../cookies.php');
+include('lib.php');
+include('cookies.php');
 $link = opendb();
 $userrow = checkcookies();
 if ($userrow == false) { die("Please log in to the <a href=\"../login.php?do=login\">game</a> before using the control panel."); }
