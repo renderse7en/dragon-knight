@@ -10,9 +10,14 @@ function fight() { // One big long function that determines the outcome of the f
     $userspells = explode(",",$userrow["spells"]);
     $spellquery = doquery("SELECT id,name FROM {{table}}", "spells");
     while ($spellrow = mysql_fetch_array($spellquery)) {
-        if ($userspells[$spellrow["id"]] == 1) {
+        $spell = false;
+        foreach ($userspells as $a => $b) {
+            if ($b == $spellrow["id"]) { $spell = true; }
+        }
+        if ($spell == true) {
             $pagearray["magiclist"] .= "<option value=\"".$spellrow["id"]."\">".$spellrow["name"]."</option>\n";
         }
+        unset($spell);
     }
     if ($pagearray["magiclist"] == "") { $pagearray["magiclist"] = "<option value=\"0\">None</option>\n"; }
     $magiclist = $pagearray["magiclist"];
@@ -180,7 +185,11 @@ function fight() { // One big long function that determines the outcome of the f
         
         $newspellquery = doquery("SELECT * FROM {{table}} WHERE id='$pickedspell' LIMIT 1", "spells");
         $newspellrow = mysql_fetch_array($newspellquery);
-        if ($userspells[$pickedspell] != 1) { display("You have not yet learned this spell. Please go back and try again.", "Error"); die(); }
+        $spell = false;
+        foreach($userspells as $a => $b) {
+            if ($b == $pickedspell) { $spell = true; }
+        }
+        if ($pickedspell != true) { display("You have not yet learned this spell. Please go back and try again.", "Error"); die(); }
         if ($userrow["currentmp"] < $newspellrow["mp"]) { display("You do not have enough Magic Points to cast this spell. Please go back and try again.", "Error"); die(); }
         
         if ($newspellrow["type"] == 1) { // Heal spell.
@@ -379,9 +388,7 @@ function victory() {
             $newlevel = $levelrow["id"];
             
             if ($levelrow[$userrow["charclass"]."_spells"] != 0) {
-                $userspells = explode(",",$userrow["spells"]);
-                $userspells[$levelrow[$userrow["charclass"]."_spells"]] = 1;
-                $userspells = implode(",",$userspells);
+                $userspells = $userrow["spells"] .= ",".$levelrow[$userrow["charclass"]."_spells"];
                 $newspell = "spells='$userspells',";
                 $spelltext = "You have learned a new spell.<br />";
             } else { $spelltext = ""; $newspell=""; }

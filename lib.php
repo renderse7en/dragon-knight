@@ -172,7 +172,11 @@ function display($content, $title, $topnav=true, $leftnav=true, $rightnav=true, 
         $userspells = explode(",",$userrow["spells"]);
         $userrow["magiclist"] = "";
         while ($spellrow = mysql_fetch_array($spellquery)) {
-            if ($userspells[$spellrow["id"]] == 1 && $spellrow["type"] == 1) {
+            $spell = false;
+            foreach($userspells as $a => $b) {
+                if ($b == $spellrow["id"] && $spellrow["type"] == 1) { $spell = true; }
+            }
+            if ($spell == true) {
                 $userrow["magiclist"] .= "<a href=\"index.php?do=spell:".$spellrow["id"]."\">".$spellrow["name"]."</a><br />";
             }
         }
@@ -183,7 +187,13 @@ function display($content, $title, $topnav=true, $leftnav=true, $rightnav=true, 
         $townquery2 = doquery("SELECT * FROM {{table}} ORDER BY id", "towns");
         $userrow["townslist"] = "";
         while ($townrow2 = mysql_fetch_array($townquery2)) {
-            if ($townslist[$townrow2["id"]] == 1) { $userrow["townslist"] .= "<a href=\"index.php?do=gotown:".$townrow2["id"]."\">".$townrow2["name"]."</a><br />\n"; }
+            $town = false;
+            foreach($townslist as $a => $b) {
+                if ($b == $townrow2["id"]) { $town = true; }
+            }
+            if ($town == true) { 
+                $userrow["townslist"] .= "<a href=\"index.php?do=gotown:".$townrow2["id"]."\">".$townrow2["name"]."</a><br />\n"; 
+            }
         }
         
     } else {

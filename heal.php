@@ -9,7 +9,11 @@ function healspells($id) {
     $spellrow = mysql_fetch_array($spellquery);
     
     // All the various ways to error out.
-    if ($userspells[$id] != 1) { display("You have not yet learned this spell. Please go back and try again.", "Error"); die(); }
+    $spell = false;
+    foreach ($userspells as $a => $b) {
+        if ($b == $id) { $spell = true; }
+    }
+    if ($spell != true) { display("You have not yet learned this spell. Please go back and try again.", "Error"); die(); }
     if ($spellrow["type"] != 1) { display("This is not a healing spell. Please go back and try again.", "Error"); die(); }
     if ($userrow["currentmp"] < $spellrow["mp"]) { display("You do not have enough Magic Points to cast this spell. Please go back and try again.", "Error"); die(); }
     if ($userrow["currentaction"] == "Fighting") { display("You cannot use the Quick Spells list during a fight. Please go back and select the Healing Spell you wish to use from the Spells box on the main fighting screen to continue.", "Error"); die(); }

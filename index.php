@@ -4,12 +4,23 @@ if (file_exists('install.php')) { die("Please delete <b>install.php</b> from you
 include('lib.php');
 include('login.php');
 $link = opendb();
-$userrow = checkcookies();
-if ($userrow == false) { header("Location: login.php?do=login"); die(); }
 $controlquery = doquery("SELECT * FROM {{table}} WHERE id='1' LIMIT 1", "control");
 $controlrow = mysql_fetch_array($controlquery);
 
+// Login (or verify) if not logged in.
+$userrow = checkcookies();
+if ($userrow == false) { 
+    if (isset($_GET["do"])) {
+        if ($_GET["do"] == "verify") { header("Location: users.php?do=verify"); die(); }
+    }
+    header("Location: login.php?do=login"); die(); 
+}
+// Close game.
 if ($controlrow["gameopen"] == 0) { display("The game is currently closed for maintanence. Please check back later.","Game Closed"); die(); }
+// Force verify if the user isn't verified yet.
+if ($controlrow["verifyemail"] == 1 && $userrow["verify"] != 1) { header("Location: users.php?do=verify"); die(); }
+// Block user if he/she has been banned.
+if ($userrow["authlevel"] == 2) { die("Your account has been blocked. Please try back later."); }
 
 if (isset($_GET["do"])) {
     $do = explode(":",$_GET["do"]);
@@ -35,6 +46,7 @@ if (isset($_GET["do"])) {
     elseif ($do[0] == "dead") { include('fight.php'); dead(); }
     
     // Misc functions.
+    elseif ($do[0] == "verify") { header("Location: users.php?do=verify"); die(); }
     elseif ($do[0] == "spell") { include('heal.php'); healspells($do[1]); }
     elseif ($do[0] == "showchar") { showchar(); }
     elseif ($do[0] == "onlinechar") { onlinechar($do[1]); }
@@ -65,22 +77,36 @@ function donothing() {
 
 function dotown() { // Spit out the main town page.
     
-    global $userrow, $numqueries;
+    global $userrow, $controlrow, $numqueries;
     
     $townquery = doquery("SELECT * FROM {{table}} WHERE latitude='".$userrow["latitude"]."' AND longitude='".$userrow["longitude"]."' LIMIT 1", "towns");
     if (mysql_num_rows($townquery) == 0) { display("There is an error with your user account, or with the town data. Please try again.","Error"); }
     $townrow = mysql_fetch_array($townquery);
     
     // News box. Grab latest news entry and display it. Something a little more graceful coming soon maybe.
-    $newsquery = doquery("SELECT * FROM {{table}} ORDER BY id DESC LIMIT 1", "news");
-    $newsrow = mysql_fetch_array($newsquery);
-    $townrow["news"] = "<span class=\"light\">[".prettydate($newsrow["postdate"])."]</span><br />".nl2br($newsrow["content"]);
+    if ($controlrow["shownews"] == 1) { 
+        $newsquery = doquery("SELECT * FROM {{table}} ORDER BY id DESC LIMIT 1", "news");
+        $newsrow = mysql_fetch_array($newsquery);
+        $townrow["news"] = "<table width=\"95%\"><tr><td class=\"title\">Latest News</td></tr><tr><td>\n";
+        $townrow["news"] .= "<span class=\"light\">[".prettydate($newsrow["postdate"])."]</span><br />".nl2br($newsrow["content"]);
+        $townrow["news"] .= "</td></tr></table>\n";
+    } else { $townrow["news"] = ""; }
     
     // Who's Online. Currently just members. Guests maybe later.
-    $onlinequery = doquery("SELECT * FROM {{table}} WHERE UNIX_TIMESTAMP(onlinetime) >= '".(time()-600)."' ORDER BY charname", "users");
-    $townrow["whosonline"] = "There are <b>" . mysql_num_rows($onlinequery) . "</b> user(s) online within the last 10 minutes: ";
-    while ($onlinerow = mysql_fetch_array($onlinequery)) { $townrow["whosonline"] .= "<a href=\"index.php?do=onlinechar:".$onlinerow["id"]."\">".$onlinerow["charname"]."</a>" . ", "; }
-    $townrow["whosonline"] = rtrim($townrow["whosonline"], ", ");
+    if ($controlrow["showonline"] == 1) {
+        $onlinequery = doquery("SELECT * FROM {{table}} WHERE UNIX_TIMESTAMP(onlinetime) >= '".(time()-600)."' ORDER BY charname", "users");
+        $townrow["whosonline"] = "<table width=\"95%\"><tr><td class=\"title\">Who's Online</td></tr><tr><td>\n";
+        $townrow["whosonline"] .= "There are <b>" . mysql_num_rows($onlinequery) . "</b> user(s) online within the last 10 minutes: ";
+        while ($onlinerow = mysql_fetch_array($onlinequery)) { $townrow["whosonline"] .= "<a href=\"index.php?do=onlinechar:".$onlinerow["id"]."\">".$onlinerow["charname"]."</a>" . ", "; }
+        $townrow["whosonline"] = rtrim($townrow["whosonline"], ", ");
+        $townrow["whosonline"] .= "</td></tr></table>\n";
+    } else { $townrow["whosonline"] = ""; }
+    
+    if ($controlrow["showbabble"] == 1) {
+        $townrow["babblebox"] = "<table width=\"95%\"><tr><td class=\"title\">Babble Box</td></tr><tr><td>\n";
+        $townrow["babblebox"] .= "<iframe src=\"index.php?do=babblebox\" name=\"sbox\" width=\"100%\" height=\"250\" frameborder=\"0\" id=\"bbox\">Your browser does not support inline frames! The Babble Box will not be available until you upgrade to a newer <a href=\"http://www.mozilla.org\" target=\"_new\">browser</a>.</iframe>";
+        $townrow["babblebox"] .= "</td></tr></table>\n";
+    } else { $townrow["babblebox"] = ""; }
     
     $page = gettemplate("towns");
     $page = parsetemplate($page, $townrow);
@@ -146,8 +172,12 @@ function showchar() {
     $userspells = explode(",",$userrow["spells"]);
     $userrow["magiclist"] = "";
     while ($spellrow = mysql_fetch_array($spellquery)) {
-        if ($userspells[$spellrow["id"]] == 1) {
-            $userrow["magiclist"] .= $spellrow["name"] . "<br />";
+        $spell = false;
+        foreach($userspells as $a => $b) {
+            if ($b == $spellrow["id"]) { $spell = true; }
+        }
+        if ($spell == true) {
+            $userrow["magiclist"] .= $spellrow["name"]."<br />";
         }
     }
     if ($userrow["magiclist"] == "") { $userrow["magiclist"] = "None"; }
@@ -196,21 +226,6 @@ function onlinechar($id) {
     if ($userrow["difficulty"] == 1) { $userrow["difficulty"] = $controlrow["diff1name"]; }
     elseif ($userrow["difficulty"] == 2) { $userrow["difficulty"] = $controlrow["diff2name"]; }
     elseif ($userrow["difficulty"] == 3) { $userrow["difficulty"] = $controlrow["diff3name"]; }
-    
-    $spellquery = doquery("SELECT id,name FROM {{table}}","spells");
-    $userspells = explode(",",$userrow["spells"]);
-    $userrow["magiclist"] = "";
-    while ($spellrow = mysql_fetch_array($spellquery)) {
-        if ($userspells[$spellrow["id"]] == 1) {
-            $userrow["magiclist"] .= $spellrow["name"] . "<br />";
-        }
-    }
-    if ($userrow["magiclist"] == "") { $userrow["magiclist"] = "None"; }
-    
-    // Make page tags for XHTML validation.
-    $xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
-    . "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"DTD/xhtml1-transitional.dtd\">\n"
-    . "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n";
     
     $charsheet = gettemplate("onlinechar");
     $page = parsetemplate($charsheet, $userrow);

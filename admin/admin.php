@@ -57,7 +57,7 @@ function main() {
         if ($diff3mod == "") { $errors++; $errorlist .= "Difficulty 3 value is required.<br />"; }
         
         if ($errors == 0) { 
-            $query = doquery("UPDATE {{table}} SET gamename='$gamename',gamesize='$gamesize',forumtype='$forumtype',forumaddress='$forumaddress',compression='$compression',class1name='$class1name',class2name='$class2name',class3name='$class3name',diff1name='$diff1name',diff2name='$diff2name',diff3name='$diff3name',diff2mod='$diff2mod',diff3mod='$diff3mod',gameopen='$gameopen' WHERE id='1' LIMIT 1", "control");
+            $query = doquery("UPDATE {{table}} SET gamename='$gamename',gamesize='$gamesize',forumtype='$forumtype',forumaddress='$forumaddress',compression='$compression',class1name='$class1name',class2name='$class2name',class3name='$class3name',diff1name='$diff1name',diff2name='$diff2name',diff3name='$diff3name',diff2mod='$diff2mod',diff3mod='$diff3mod',gameopen='$gameopen',verifyemail='$verifyemail',gameurl='$gameurl',adminemail='$adminemail',shownews='$shownews',showonline='$showonline',showbabble='$showbabble' WHERE id='1' LIMIT 1", "control");
             display("Settings updated.","Main Settings");
         } else {
             display("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Main Settings");
@@ -73,10 +73,16 @@ These options control several major settings for the overall game engine.<br /><
 <table width="90%">
 <tr><td width="20%"><span class="highlight">Game Open:</span></td><td><select name="gameopen"><option value="1" {{open1select}}>Open</option><option value="0" {{open0select}}>Closed</option></select><br /><span class="small">Close the game if you are upgrading or working on settings and don't want to cause odd errors for end-users. Closing the game will completely halt all activity.</span></td></tr>
 <tr><td width="20%">Game Name:</td><td><input type="text" name="gamename" size="30" maxlength="50" value="{{gamename}}" /><br /><span class="small">Default is "Dragon Knight". Change this if you want to change to call your game something different.</span></td></tr>
+<tr><td width="20%">Game URL:</td><td><input type="text" name="gameurl" size="50" maxlength="100" value="{{gameurl}}" /><br /><span class="small">Please specify the full URL to your game installation ("http://www.server.com/dkpath/index.php").  This gets used in the registration email sent to users. If you leave this field blank or incorrect, users may not be able to register correctly.</span></td></tr>
+<tr><td width="20%">Admin Email:</td><td><input type="text" name="adminemail" size="30" maxlength="100" value="{{adminemail}}" /><br /><span class="small">Please specify your email address. This gets used when the game has to send an email to users.</span></td></tr>
 <tr><td width="20%">Map Size:</td><td><input type="text" name="gamesize" size="3" maxlength="3" value="{{gamesize}}" /><br /><span class="small">Default is 250. This is the size of each map quadrant. Note that monster levels increase every 5 spaces, so you should ensure that you have at least (map size / 5) monster levels total, otherwise there will be parts of the map without any monsters, or some monsters won't ever get used. Ex: with a map size of 250, you should have 50 monster levels total.</span></td></tr>
 <tr><td width="20%">Forum Type:</td><td><select name="forumtype"><option value="0" {{selecttype0}}>Disabled</option><option value="1" {{selecttype1}}>Internal</option><option value="2" {{selecttype2}}>External</option></select><br /><span class="small">'Disabled' removes the forum link. 'Internal' uses the built-in (and very stripped-down) forum program included with Dragon Knight, if you don't have your own forums software already installed. 'External' uses the address provided below and links to your own forums software.</span></td></tr>
 <tr><td width="20%">External Forum:</td><td><input type="text" name="forumaddress" size="30" maxlength="200" value="{{forumaddress}}" /><br /><span class="small">If the above value is set to 'External,' please specify the complete URL to your forums here.</span></td></tr>
 <tr><td width="20%">Page Compression:</td><td><select name="compression"><option value="0" {{selectcomp0}}>Disabled</option><option value="1" {{selectcomp1}}>Enabled</option></select><br /><span class="small">Enable page compression if it is supported by your server, and this will greatly reduce the amount of bandwidth required by the game.</span></td></tr>
+<tr><td width="20%">Email Verification:</td><td><select name="verifyemail"><option value="0" {{selectverify0}}>Disabled</option><option value="1" {{selectverify1}}>Enabled</option></select><br /><span class="small">Make users verify their email address for added security.</span></td></tr>
+<tr><td width="20%">Show News:</td><td><select name="shownews"><option value="0" {{selectnews0}}>No</option><option value="1" {{selectnews1}}>Yes</option></select><br /><span class="small">Toggle display of the Latest News box in towns.</td></tr>
+<tr><td width="20%">Show Who's Online:</td><td><select name="showonline"><option value="0" {{selectonline0}}>No</option><option value="1" {{selectonline1}}>Yes</option></select><br /><span class="small">Toggle display of the Who's Online box in towns.</span></td></tr>
+<tr><td width="20%">Show Babblebox:</td><td><select name="showbabble"><option value="0" {{selectbabble0}}>No</option><option value="1" {{selectbabble1}}>Yes</option></select><br /><span class="small">Toggle display of the Babble Box in towns.</span></td></tr>
 <tr><td width="20%">Class 1 Name:</td><td><input type="text" name="class1name" size="20" maxlength="50" value="{{class1name}}" /><br /></td></tr>
 <tr><td width="20%">Class 2 Name:</td><td><input type="text" name="class2name" size="20" maxlength="50" value="{{class2name}}" /><br /></td></tr>
 <tr><td width="20%">Class 3 Name:</td><td><input type="text" name="class3name" size="20" maxlength="50" value="{{class3name}}" /><br /></td></tr>
@@ -95,6 +101,14 @@ END;
     if ($controlrow["forumtype"] == 2) { $controlrow["selecttype2"] = "selected=\"selected\" "; } else { $controlrow["selecttype2"] = ""; }
     if ($controlrow["compression"] == 0) { $controlrow["selectcomp0"] = "selected=\"selected\" "; } else { $controlrow["selectcomp0"] = ""; }
     if ($controlrow["compression"] == 1) { $controlrow["selectcomp1"] = "selected=\"selected\" "; } else { $controlrow["selectcomp1"] = ""; }
+    if ($controlrow["verifyemail"] == 0) { $controlrow["selectverify0"] = "selected=\"selected\" "; } else { $controlrow["selectverify0"] = ""; }
+    if ($controlrow["verifyemail"] == 1) { $controlrow["selectverify1"] = "selected=\"selected\" "; } else { $controlrow["selectverify1"] = ""; }
+    if ($controlrow["shownews"] == 0) { $controlrow["selectnews0"] = "selected=\"selected\" "; } else { $controlrow["selectnews0"] = ""; }
+    if ($controlrow["shownews"] == 1) { $controlrow["selectnews1"] = "selected=\"selected\" "; } else { $controlrow["selectnews1"] = ""; }
+    if ($controlrow["showonline"] == 0) { $controlrow["selectonline0"] = "selected=\"selected\" "; } else { $controlrow["selectonline0"] = ""; }
+    if ($controlrow["showonline"] == 1) { $controlrow["selectonline1"] = "selected=\"selected\" "; } else { $controlrow["selectonline1"] = ""; }
+    if ($controlrow["showbabble"] == 0) { $controlrow["selectbabble0"] = "selected=\"selected\" "; } else { $controlrow["selectbabble0"] = ""; }
+    if ($controlrow["showbabble"] == 1) { $controlrow["selectbabble1"] = "selected=\"selected\" "; } else { $controlrow["selectbabble1"] = ""; }
     if ($controlrow["gameopen"] == 1) { $controlrow["open1select"] = "selected=\"selected\" "; } else { $controlrow["open1select"] = ""; }
     if ($controlrow["gameopen"] == 0) { $controlrow["open0select"] = "selected=\"selected\" "; } else { $controlrow["open0select"] = ""; }
 
@@ -741,16 +755,16 @@ function edituser($id) {
         if ($errors == 0) { 
 $updatequery = <<<END
 UPDATE {{table}} SET
-email='$email', verify='$verify', charname='$charname', authlevel='$authlevel', latitude='$latitude',
-longitude='$longitude', difficulty='$difficulty', charclass='$charclass', currentaction='$currentaction', currentfight='$currentfight',
-currentmonster='$currentmonster', currentmonsterhp='$currentmonsterhp', currentmonstersleep='$currentmonstersleep', currentmonsterimmune='$currentmonsterimmune', currentuberdamage='$currentuberdamage',
-currentuberdefense='$currentuberdefense', currenthp='$currenthp', currentmp='$currentmp', currenttp='$currenttp', maxhp='$maxhp',
-maxmp='$maxmp', maxtp='$maxtp', level='$level', gold='$gold', experience='$experience',
-goldbonus='$goldbonus', expbonus='$expbonus', strength='$strength', dexterity='$dexterity', attackpower='$attackpower',
-defensepower='$defensepower', weaponid='$weaponid', armorid='$armorid', shieldid='$shieldid', slot1id='$slot1id',
-slot2id='$slot2id', slot3id='$slot3id', weaponname='$weaponname', armorname='$armorname', shieldname='$shieldname',
-slot1name='$slot1name', slot2name='$slot2name', slot3name='$slot3name', dropcode='$dropcode', spells='$spells',
-towns='$towns' WHERE id='$id' LIMIT 1
+email="$email", verify="$verify", charname="$charname", authlevel="$authlevel", latitude="$latitude",
+longitude="$longitude", difficulty="$difficulty", charclass="$charclass", currentaction="$currentaction", currentfight="$currentfight",
+currentmonster="$currentmonster", currentmonsterhp="$currentmonsterhp", currentmonstersleep="$currentmonstersleep", currentmonsterimmune="$currentmonsterimmune", currentuberdamage="$currentuberdamage",
+currentuberdefense="$currentuberdefense", currenthp="$currenthp", currentmp="$currentmp", currenttp="$currenttp", maxhp="$maxhp",
+maxmp="$maxmp", maxtp="$maxtp", level="$level", gold="$gold", experience="$experience",
+goldbonus="$goldbonus", expbonus="$expbonus", strength="$strength", dexterity="$dexterity", attackpower="$attackpower",
+defensepower="$defensepower", weaponid="$weaponid", armorid="$armorid", shieldid="$shieldid", slot1id="$slot1id",
+slot2id="$slot2id", slot3id="$slot3id", weaponname="$weaponname", armorname="$armorname", shieldname="$shieldname",
+slot1name="$slot1name", slot2name="$slot2name", slot3name="$slot3name", dropcode="$dropcode", spells="$spells",
+towns="$towns" WHERE id="$id" LIMIT 1
 END;
 			$query = doquery($updatequery, "users");
             display("User updated.","Edit Users");
@@ -781,7 +795,7 @@ $page = <<<END
 <tr><td width="20%">Character Name:</td><td><input type="text" name="charname" size="30" maxlength="30" value="{{charname}}" /></td></tr>
 <tr><td width="20%">Register Date:</td><td>{{regdate}}</td></tr>
 <tr><td width="20%">Last Online:</td><td>{{onlinetime}}</td></tr>
-<tr><td width="20%">Auth Level:</td><td><select name="authlevel"><option value="0" {{auth0select}}>User</option><option value="1" {{auth1select}}>Admin</option></select></td></tr>
+<tr><td width="20%">Auth Level:</td><td><select name="authlevel"><option value="0" {{auth0select}}>User</option><option value="1" {{auth1select}}>Admin</option><option value="2" {{auth2select}}>Blocked</option></select><br /><span class="small">Set to "Blocked" to temporarily (or permanently) ban a user.</span></td></tr>
 
 <tr><td colspan="2" style="background-color:#cccccc;">&nbsp;</td></tr>
 
@@ -850,6 +864,7 @@ END;
 
     if ($row["authlevel"] == 0) { $row["auth0select"] = "selected=\"selected\" "; } else { $row["auth0select"] = ""; }
     if ($row["authlevel"] == 1) { $row["auth1select"] = "selected=\"selected\" "; } else { $row["auth1select"] = ""; }
+    if ($row["authlevel"] == 2) { $row["auth2select"] = "selected=\"selected\" "; } else { $row["auth2select"] = ""; }
     if ($row["charclass"] == 1) { $row["class1select"] = "selected=\"selected\" "; } else { $row["class1select"] = ""; }
     if ($row["charclass"] == 2) { $row["class2select"] = "selected=\"selected\" "; } else { $row["class2select"] = ""; }
     if ($row["charclass"] == 3) { $row["class3select"] = "selected=\"selected\" "; } else { $row["class3select"] = ""; }

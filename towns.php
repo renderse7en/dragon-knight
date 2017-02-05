@@ -349,11 +349,16 @@ function travelto($id, $usepoints=true) { // Send a user to a town from the Trav
     
     // If they got here by exploring, add this town to their map.
     $mapped = explode(",",$userrow["towns"]);
-    if ($mapped[$id] == 0) {
-        $mapped[$id] = 1;
-        $mapped = "towns='".implode(",",$mapped)."',";
-    } else {
-        $mapped = "";
+    $town = false;
+    foreach($mapped as $a => $b) {
+        if ($b == $id) { $town = true; }
+    }
+    $mapped = implode(",",$mapped);
+    if ($town == false) { 
+        $mapped .= ",$id";
+        $mapped = "towns='".$mapped."',";
+    } else { 
+        $mapped = "towns='".$mapped."',";
     }
     
     $updatequery = doquery("UPDATE {{table}} SET currentaction='In Town',$mapped currenttp='$newtp',latitude='$newlat',longitude='$newlon' WHERE id='$newid' LIMIT 1", "users");

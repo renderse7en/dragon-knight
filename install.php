@@ -94,6 +94,8 @@ CREATE TABLE `$control` (
   `gamename` varchar(50) NOT NULL default '',
   `gamesize` smallint(5) unsigned NOT NULL default '0',
   `gameopen` tinyint(3) unsigned NOT NULL default '0',
+  `gameurl` varchar(200) NOT NULL default '',
+  `adminemail` varchar(100) NOT NULL default '',
   `forumtype` tinyint(3) unsigned NOT NULL default '0',
   `forumaddress` varchar(200) NOT NULL default '',
   `class1name` varchar(50) NOT NULL default '',
@@ -106,14 +108,19 @@ CREATE TABLE `$control` (
   `diff3name` varchar(50) NOT NULL default '',
   `diff3mod` float unsigned NOT NULL default '0',
   `compression` tinyint(3) unsigned NOT NULL default '0',
+  `verifyemail` tinyint(3) unsigned NOT NULL default '0',
+  `shownews` tinyint(3) unsigned NOT NULL default '0',
+  `showbabble` tinyint(3) unsigned NOT NULL default '0',
+  `showonline` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM;
+
 END;
 if (dobatch($query) == 1) { echo "Control table created.<br />"; } else { echo "Error creating Control table."; }
 unset($query);
 
 $query = <<<END
-INSERT INTO `$control` VALUES (1, 'Dragon Knight', 250, 1, 1, '', 'Mage', 'Warrior', 'Paladin', 'Easy', '1', 'Medium', '1.2', 'Hard', '1.5', 1);
+INSERT INTO `$control` VALUES (1, 'Dragon Knight', 250, 1, '', '', 1, '', 'Mage', 'Warrior', 'Paladin', 'Easy', '1', 'Medium', '1.2', 'Hard', '1.5', 1, 1, 1, 1, 1);
 END;
 if (dobatch($query) == 1) { echo "Control table populated.<br />"; } else { echo "Error populating Control table."; }
 unset($query);
@@ -691,8 +698,8 @@ CREATE TABLE `$users` (
   `slot2name` varchar(30) NOT NULL default 'None',
   `slot3name` varchar(30) NOT NULL default 'None',
   `dropcode` mediumint(8) unsigned NOT NULL default '0',
-  `spells` varchar(50) NOT NULL default '0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0',
-  `towns` varchar(50) NOT NULL default '0,1,0,0,0,0,0,0,0',
+  `spells` varchar(50) NOT NULL default '0,',
+  `towns` varchar(50) NOT NULL default '0,',
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM;
 END;
@@ -752,7 +759,7 @@ function fourth() { // Final page: insert new user row, congratulate the person 
     
     global $dbsettings;
     $users = $dbsettings["prefix"] . "_users";
-    $query = mysql_query("INSERT INTO $users SET id='1',username='$username',password='$password',email='$email1',verify='1',charname='$charname',regdate=NOW(),onlinetime=NOW(),authlevel='1'") or die(mysql_error());
+    $query = mysql_query("INSERT INTO $users SET id='1',username='$username',password='$password',email='$email1',verify='1',charname='$charname',charclass='$charclass',regdate=NOW(),onlinetime=NOW(),authlevel='1'") or die(mysql_error());
 
 $page = <<<END
 <html>

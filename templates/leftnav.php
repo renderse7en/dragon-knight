@@ -31,6 +31,7 @@ Travel To:<br />
 <tr><td>
 {{forumslink}}
 {{adminlink}}
+<a href="users.php?do=changepassword">Change Password</a><br />
 <a href="login.php?do=logout">Log Out</a><br />
 <a href="help.php">Help</a>
 </td></tr>
