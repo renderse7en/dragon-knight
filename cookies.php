@@ -15,7 +15,7 @@ function checkcookies() {
         if (mysql_num_rows($query) != 1) { die("Invalid cookie data (Error 1). Please clear cookies and log in again."); }
         $row = mysql_fetch_array($query);
         if ($row["id"] != $theuser[0]) { die("Invalid cookie data (Error 2). Please clear cookies and log in again."); }
-        if (md5($row["password"] . "--" . $dbsettings["secretword"]) != $theuser[2]) { die("Invalid cookie data (Error 3). Please clear cookies and log in again."); }
+        if (md5($row["password"] . "--" . $dbsettings["secretword"]) !== $theuser[2]) { die("Invalid cookie data (Error 3). Please clear cookies and log in again."); }
         
         // If we've gotten this far, cookie should be valid, so write a new one.
         $newcookie = implode(" ",$theuser);

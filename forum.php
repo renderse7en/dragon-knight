@@ -8,7 +8,12 @@ if ($userrow == false) { display("The forum is for registered players only.", "F
 $controlquery = doquery("SELECT * FROM {{table}} WHERE id='1' LIMIT 1", "control");
 $controlrow = mysql_fetch_array($controlquery);
 
+// Close game.
 if ($controlrow["gameopen"] == 0) { display("The game is currently closed for maintanence. Please check back later.","Game Closed"); die(); }
+// Force verify if the user isn't verified yet.
+if ($controlrow["verifyemail"] == 1 && $userrow["verify"] != 1) { header("Location: users.php?do=verify"); die(); }
+// Block user if he/she has been banned.
+if ($userrow["authlevel"] == 2) { die("Your account has been blocked. Please try back later."); }
 
 if (isset($_GET["do"])) {
 	$do = explode(":",$_GET["do"]);

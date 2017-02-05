@@ -2,7 +2,7 @@
 
 $starttime = getmicrotime();
 $numqueries = 0;
-$version = "1.1.9";
+$version = "1.1.10";
 $build = "";
 
 // Handling for servers with magic_quotes turned on.
