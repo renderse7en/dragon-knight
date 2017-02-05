@@ -73,7 +73,7 @@ function fight() { // One big long function that determines the outcome of the f
                 }
             }
             if ($userrow["currentmonstersleep"] == 0) { // Only do this if the monster is awake.
-                $tohit = ceil(rand((($monsterrow["maxdam"]/6)*3),$monsterrow["maxdam"]));
+                $tohit = ceil(rand($monsterrow["maxdam"]*.5,$monsterrow["maxdam"]));
                 if ($userrow["difficulty"] == 2) { $tohit = ceil($tohit * $controlrow["diff2mod"]); }
                 if ($userrow["difficulty"] == 3) { $tohit = ceil($tohit * $controlrow["diff3mod"]); }
                 $toblock = ceil(rand($userrow["defensepower"]*.75,$userrow["defensepower"])/4);
@@ -145,7 +145,7 @@ function fight() { // One big long function that determines the outcome of the f
             }
         }
         if ($userrow["currentmonstersleep"] == 0) { // Only do this if the monster is awake.
-            $tohit = ceil(rand(($monsterrow["maxdam"]*.5),$monsterrow["maxdam"]));
+            $tohit = ceil(rand($monsterrow["maxdam"]*.5,$monsterrow["maxdam"]));
             if ($userrow["difficulty"] == 2) { $tohit = ceil($tohit * $controlrow["diff2mod"]); }
             if ($userrow["difficulty"] == 3) { $tohit = ceil($tohit * $controlrow["diff3mod"]); }
             $toblock = ceil(rand($userrow["defensepower"]*.75,$userrow["defensepower"])/4);
@@ -235,7 +235,7 @@ function fight() { // One big long function that determines the outcome of the f
             }
         }
         if ($userrow["currentmonstersleep"] == 0) { // Only do this if the monster is awake.
-            $tohit = ceil(rand((($monsterrow["maxdam"]/6)*3)),$monsterrow["maxdam"]);
+            $tohit = ceil(rand($monsterrow["maxdam"]*.5,$monsterrow["maxdam"]));
             if ($userrow["difficulty"] == 2) { $tohit = ceil($tohit * $controlrow["diff2mod"]); }
             if ($userrow["difficulty"] == 3) { $tohit = ceil($tohit * $controlrow["diff3mod"]); }
             $toblock = ceil(rand($userrow["defensepower"]*.75,$userrow["defensepower"])/4);
@@ -276,7 +276,7 @@ function fight() { // One big long function that determines the outcome of the f
             }
         }
         if ($userrow["currentmonstersleep"] == 0) { // Only do this if the monster is awake.
-            $tohit = ceil(rand(($monsterrow["maxdam"]*.5),$monsterrow["maxdam"]));
+            $tohit = ceil(rand($monsterrow["maxdam"]*.5,$monsterrow["maxdam"]));
             if ($userrow["difficulty"] == 2) { $tohit = ceil($tohit * $controlrow["diff2mod"]); }
             if ($userrow["difficulty"] == 3) { $tohit = ceil($tohit * $controlrow["diff3mod"]); }
             $toblock = ceil(rand($userrow["defensepower"]*.75,$userrow["defensepower"])/4);

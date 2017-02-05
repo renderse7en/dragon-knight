@@ -1,5 +1,5 @@
 <?php 
-include('../lib.php'); 
+include('lib.php'); 
 $link = opendb();
 $controlquery = doquery("SELECT * FROM {{table}} WHERE id='1' LIMIT 1", "control");
 $controlrow = mysql_fetch_array($controlquery);
@@ -12,7 +12,7 @@ ob_start("ob_gzhandler");
 <title><? echo $controlrow["gamename"]; ?> Help</title>
 <style type="text/css">
 body {
-  background-image: url(../images/background.jpg);
+  background-image: url(images/background.jpg);
   color: black;
   font: 11px verdana;
 }
@@ -70,25 +70,35 @@ a:hover {
 </head>
 <body>
 <a name="top"></a>
-<h1><? echo $controlrow["gamename"]; ?> Help: Monsters</h1>
-[ <a href="help.php">Return to Help</a> | <a href="../index.php">Return to the game</a> ]
+<h1><? echo $controlrow["gamename"]; ?> Help: Spells</h1>
+[ <a href="help.php">Return to Help</a> | <a href="index.php">Return to the game</a> ]
 
 <br /><br /><hr />
 
-<table width="75%" style="border: solid 1px black" cellspacing="0" cellpadding="0">
-<tr><td colspan="8" bgcolor="#ffffff"><center><b>Monsters</b></center></td></tr>
-<tr><td><b>Name</b></td><td><b>Max HP</b></td><td><b>Max Damage</b></td><td><b>Armor</b></td><td><b>Level</b></td><td><b>Max Exp.</b></td><td><b>Max Gold</b></td><td><b>Immunity</b></td></tr>
+<table width="50%" style="border: solid 1px black" cellspacing="0" cellpadding="0">
+<tr><td colspan="8" bgcolor="#ffffff"><center><b>Spells</b></center></td></tr>
+<tr><td><b>Name</b></td><td><b>Cost</b></td><td><b>Type</b></td><td><b>Attribute</b></td></tr>
 <?
 $count = 1;
-$itemsquery = doquery("SELECT * FROM {{table}} ORDER BY id", "monsters");
+$itemsquery = doquery("SELECT * FROM {{table}} ORDER BY id", "spells");
 while ($itemsrow = mysql_fetch_array($itemsquery)) {
     if ($count == 1) { $color = "bgcolor=\"#ffffff\""; $count = 2; } else { $color = ""; $count = 1; }
-    if ($itemsrow["immune"] == 0) { $immune = "<span class=\"light\">None</span>"; } elseif ($itemsrow["immune"] == 1) { $immune = "Hurt"; } else { $immune = "Hurt & Sleep"; }
-    echo "<tr><td $color width=\"30%\">".$itemsrow["name"]."</td><td $color width=\"10%\">".$itemsrow["maxhp"]."</td><td $color width=\"10%\">".$itemsrow["maxdam"]."</td><td $color width=\"10%\">".$itemsrow["armor"]."</td><td $color width=\"10%\">".$itemsrow["level"]."</td><td $color width=\"10%\">".$itemsrow["maxexp"]."</td><td $color width=\"10%\">".$itemsrow["maxgold"]."</td><td $color width=\"20%\">$immune</td></tr>\n";
+    if ($itemsrow["type"] == 1) { $type = "Heal"; }
+    elseif ($itemsrow["type"] == 2) { $type = "Hurt"; }
+    elseif ($itemsrow["type"] == 3) { $type = "Sleep"; }
+    elseif ($itemsrow["type"] == 4) { $type = "+Damage (%)"; }
+    elseif ($itemsrow["type"] == 5) { $type = "+Defense (%)"; }
+    echo "<tr><td $color width=\"25%\">".$itemsrow["name"]."</td><td $color width=\"25%\">".$itemsrow["mp"]."</td><td $color width=\"25%\">$type</td><td $color width=\"25%\">".$itemsrow["attribute"]."</td></tr>\n";
 }
 ?>
 </table>
-<br />
+<ul>
+<li /><b>Heal</b> spells always give you the maximum amount possible, until your current HP is full.
+<li /><b>Hurt</b> spells deal X damage (not always the maximum) to the monster, regardless of the monster's armor.
+<li /><b>Sleep</b> spells put the monster to sleep. The monster has an X in 15 chance of remaining asleep each turn.
+<li /><b>+Damage</b> spells increase your total attack damage by X percent until the end of the fight.
+<li /><b>+Defense</b> spells reduce the total damage you take from the monster by X percent until the end of each fight.
+</ul>
 <table class="copyright" width="100%"><tr>
 <td width="50%" align="center">Powered by <a href="http://dragon.se7enet.com/dev.php" target="_new">Dragon Knight</a></td><td width="50%" align="center">&copy; 2003-2004 by renderse7en</td>
 </tr></table>

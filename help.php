@@ -1,5 +1,5 @@
 <?php 
-include('../lib.php'); 
+include('lib.php'); 
 $link = opendb();
 $controlquery = doquery("SELECT * FROM {{table}} WHERE id='1' LIMIT 1", "control");
 $controlrow = mysql_fetch_array($controlquery);
@@ -12,7 +12,7 @@ ob_start("ob_gzhandler");
 <title><? echo $controlrow["gamename"]; ?> Help</title>
 <style type="text/css">
 body {
-  background-image: url(../images/background.jpg);
+  background-image: url(images/background.jpg);
   color: black;
   font: 11px verdana;
 }
@@ -71,7 +71,7 @@ a:hover {
 <body>
 <a name="top"></a>
 <h1><? echo $controlrow["gamename"]; ?> Help</h1>
-[ <a href="../index.php">Return to the game</a> ]
+[ <a href="index.php">Return to the game</a> ]
 
 <br /><br /><hr />
 
@@ -249,25 +249,25 @@ the heal spell. These may not be used during fights, however - you have to use t
 <br /><br /><hr />
 
 <h3><a name="items"></a>Spoilers: Items & Drops</h3>
-<a href="items.php">Click here</a> for the Items & Drops spoiler page.<br /><br />
+<a href="help_items.php">Click here</a> for the Items & Drops spoiler page.<br /><br />
 [ <a href="#top">Top</a> ]
 
 <br /><br /><hr />
 
 <h3><a name="monsters"></a>Spoilers: Monsters</h3>
-<a href="monsters.php">Click here</a> for the Monsters spoiler page.<br /><br />
+<a href="help_monsters.php">Click here</a> for the Monsters spoiler page.<br /><br />
 [ <a href="#top">Top</a> ]
 
 <br /><br /><hr />
 
 <h3><a name="spells"></a>Spoilers: Spells</h3>
-<a href="spells.php">Click here</a> for the Spells spoiler page.<br /><br />
+<a href="help_spells.php">Click here</a> for the Spells spoiler page.<br /><br />
 [ <a href="#top">Top</a> ]
 
 <br /><br /><hr />
 
 <h3><a name="levels"></a>Spoilers: Levels</h3>
-<a href="levels.php">Click here</a> for the Levels spoiler page.<br /><br />
+<a href="help_levels.php">Click here</a> for the Levels spoiler page.<br /><br />
 [ <a href="#top">Top</a> ]
 
 <br /><br /><hr />

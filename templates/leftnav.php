@@ -32,7 +32,7 @@ Travel To:<br />
 {{forumslink}}
 {{adminlink}}
 <a href="login.php?do=logout">Log Out</a><br />
-<a href="help/help.php">Help</a>
+<a href="help.php">Help</a>
 </td></tr>
 </table><br />
 THEVERYENDOFYOU;
