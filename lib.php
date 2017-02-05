@@ -2,27 +2,39 @@
 
 $starttime = getmicrotime();
 $numqueries = 0;
-$version = "1.1.10";
+$version = "1.1.10a";
 $build = "";
 
 // Handling for servers with magic_quotes turned on.
 // Example from php.net.
 if (get_magic_quotes_gpc()) {
-   function stripslashes_deep($value)
-   {
-       $value = is_array($value) ?
-                   array_map('stripslashes_deep', $value) :
-                   stripslashes($value);
-
-       return $value;
-   }
 
    $_POST = array_map('stripslashes_deep', $_POST);
    $_GET = array_map('stripslashes_deep', $_GET);
    $_COOKIE = array_map('stripslashes_deep', $_COOKIE);
+
 }
-foreach($_POST as $a=>$b) { $_POST[$a] = addslashes($b); }
-foreach($_GET as $a=>$b) { $_GET[$a] = addslashes($b); }
+$_POST = array_map('addslashes_deep', $_POST);
+$_GET = array_map('addslashes_deep', $_GET);
+$_COOKIE = array_map('addslashes_deep', $_COOKIE);
+
+function stripslashes_deep($value) {
+    
+   $value = is_array($value) ?
+               array_map('stripslashes_deep', $value) :
+               stripslashes($value);
+   return $value;
+   
+}
+
+function addslashes_deep($value) {
+    
+   $value = is_array($value) ?
+               array_map('addslashes_deep', $value) :
+               stripslashes($value);
+   return $value;
+   
+}
 
 function opendb() { // Open database connection.
 
