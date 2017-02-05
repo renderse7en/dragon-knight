@@ -3,6 +3,7 @@
 function fight() { // One big long function that determines the outcome of the fight.
     
     global $userrow, $controlrow;
+    if ($userrow["currentaction"] != "Fighting") { display("Cheat attempt detected.<br /><br />Get a life, loser.", "Error"); }
     $pagearray = array();
     $playerisdead = 0;
     
