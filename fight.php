@@ -361,8 +361,8 @@ function victory() {
     if ($userrow["difficulty"] == 2) { $gold = ceil($gold * $controlrow["diff2mod"]); }
     if ($userrow["difficulty"] == 3) { $gold = ceil($gold * $controlrow["diff3mod"]); }
     if ($userrow["goldbonus"] != 0) { $gold += ceil(($userrow["goldbonus"]/100)*$exp); }
-    $newexp = $userrow["experience"] + $exp;
-    $newgold = $userrow["gold"] + $gold;
+    if ($userrow["experience"] + $exp < 16777215) { $newexp = $userrow["experience"] + $exp; $warnexp = ""; } else { $newexp = $userrow["experience"]; $exp = 0; $warnexp = "You have maxed out your experience points."; }
+    if ($userrow["gold"] + $gold < 16777215) { $newgold = $userrow["gold"] + $gold; $warngold = ""; } else { $newgold = $userrow["gold"]; $gold = 0; $warngold = "You have maxed out your experience points."; }
     
     $levelquery = doquery("SELECT * FROM {{table}} WHERE id='".($userrow["level"]+1)."' LIMIT 1", "levels");
     if (mysql_num_rows($levelquery) == 1) { $levelrow = mysql_fetch_array($levelquery); }
@@ -386,8 +386,9 @@ function victory() {
                 $spelltext = "You have learned a new spell.<br />";
             } else { $spelltext = ""; $newspell=""; }
             
-            $page = "Congratulations. You have defeated the ".$monsterrow["name"].".<br />You gain $exp experience.<br />You gain $gold gold.<br /><br /><b>You have gained a level!</b><br /><br />You gain ".$levelrow[$userrow["charclass"]."_hp"]." hit points.<br />You gain ".$levelrow[$userrow["charclass"]."_mp"]." magic points.<br />You gain ".$levelrow[$userrow["charclass"]."_tp"]." travel points.<br />You gain ".$levelrow[$userrow["charclass"]."_strength"]." strength.<br />You gain ".$levelrow[$userrow["charclass"]."_dexterity"]." dexterity.<br />$spelltext<br />You can now continue <a href=\"index.php\">exploring</a>.";
+            $page = "Congratulations. You have defeated the ".$monsterrow["name"].".<br />You gain $exp experience. $warnexp <br />You gain $gold gold. $warngold <br /><br /><b>You have gained a level!</b><br /><br />You gain ".$levelrow[$userrow["charclass"]."_hp"]." hit points.<br />You gain ".$levelrow[$userrow["charclass"]."_mp"]." magic points.<br />You gain ".$levelrow[$userrow["charclass"]."_tp"]." travel points.<br />You gain ".$levelrow[$userrow["charclass"]."_strength"]." strength.<br />You gain ".$levelrow[$userrow["charclass"]."_dexterity"]." dexterity.<br />$spelltext<br />You can now continue <a href=\"index.php\">exploring</a>.";
             $title = "Courage and Wit have served thee well!";
+            $dropcode = "";
         } else {
             $newhp = $userrow["maxhp"];
             $newmp = $userrow["maxmp"];
@@ -398,7 +399,7 @@ function victory() {
             $newdefense = $userrow["defensepower"];
             $newlevel = $userrow["level"];
             $newspell = "";
-            $page = "Congratulations. You have defeated the ".$monsterrow["name"].".<br />You gain $exp experience.<br />You gain $gold gold.<br /><br />";
+            $page = "Congratulations. You have defeated the ".$monsterrow["name"].".<br />You gain $exp experience. $warnexp <br />You gain $gold gold. $warngold <br /><br />";
             
             if (rand(1,30) == 1) {
                 $dropquery = doquery("SELECT * FROM {{table}} WHERE mlevel <= '".$monsterrow["level"]."' ORDER BY RAND() LIMIT 1", "drops");

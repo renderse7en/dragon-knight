@@ -132,7 +132,7 @@ function showchar() {
     
     $levelquery = doquery("SELECT ". $userrow["charclass"]."_exp FROM {{table}} WHERE id='".($userrow["level"]+1)."' LIMIT 1", "levels");
     $levelrow = mysql_fetch_array($levelquery);
-    $userrow["nextlevel"] = number_format($levelrow[$userrow["charclass"]."_exp"]);
+    if ($userrow["level"] < 99) { $userrow["nextlevel"] = number_format($levelrow[$userrow["charclass"]."_exp"]); } else { $userrow["nextlevel"] = "<span class=\"light\">None</span>"; }
 
     if ($userrow["charclass"] == 1) { $userrow["charclass"] = $controlrow["class1name"]; }
     elseif ($userrow["charclass"] == 2) { $userrow["charclass"] = $controlrow["class2name"]; }
@@ -248,10 +248,11 @@ function babblebox() {
     
     $babblebox = array("content"=>"");
     $bg = 1;
-    $babblequery = doquery("SELECT * FROM {{table}} ORDER BY id LIMIT 20", "babble");
+    $babblequery = doquery("SELECT * FROM {{table}} ORDER BY id DESC LIMIT 20", "babble");
     while ($babblerow = mysql_fetch_array($babblequery)) {
-        if ($bg == 1) { $babblebox["content"] .= "<div style=\"width:98%; background-color:#eeeeee;\">[<b>".$babblerow["author"]."</b>] ".$babblerow["babble"]."</div>\n"; $bg = 2; }
-        else { $babblebox["content"] .= "<div style=\"width:98%; background-color:#ffffff;\">[<b>".$babblerow["author"]."</b>] ".stripslashes($babblerow["babble"])."</div>\n"; $bg = 1; } 
+        if ($bg == 1) { $new = "<div style=\"width:98%; background-color:#eeeeee;\">[<b>".$babblerow["author"]."</b>] ".$babblerow["babble"]."</div>\n"; $bg = 2; }
+        else { $new = "<div style=\"width:98%; background-color:#ffffff;\">[<b>".$babblerow["author"]."</b>] ".stripslashes($babblerow["babble"])."</div>\n"; $bg = 1; } 
+        $babblebox["content"] = $new . $babblebox["content"];
     }
     $babblebox["content"] .= "<center><form action=\"index.php?do=babblebox\" method=\"post\"><input type=\"text\" name=\"babble\" size=\"15\" maxlength=\"120\" /><br /><input type=\"submit\" name=\"submit\" value=\"Babble\" /> <input type=\"reset\" name=\"reset\" value=\"Clear\" /></form></center>";
     
