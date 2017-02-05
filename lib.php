@@ -2,6 +2,8 @@
 
 $starttime = getmicrotime();
 $numqueries = 0;
+$version = "1.1.2";
+$build = "";
 
 function opendb() { // Open database connection.
 
@@ -91,8 +93,7 @@ function my_htmlspecialchars($text) { // Thanks to "etymxris at yahoo dot com" f
 
 function display($content, $title, $topnav=true, $leftnav=true, $rightnav=true, $badstart=false) { // Finalize page and output to browser.
     
-    include('config.php');
-    global $numqueries, $userrow, $controlrow;
+    global $numqueries, $userrow, $controlrow, $version, $build;
     if (!isset($controlrow)) {
         $controlquery = doquery("SELECT * FROM {{table}} WHERE id='1' LIMIT 1", "control");
         $controlrow = mysql_fetch_array($controlquery);

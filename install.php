@@ -698,8 +698,8 @@ CREATE TABLE `$users` (
   `slot2name` varchar(30) NOT NULL default 'None',
   `slot3name` varchar(30) NOT NULL default 'None',
   `dropcode` mediumint(8) unsigned NOT NULL default '0',
-  `spells` varchar(50) NOT NULL default '0,',
-  `towns` varchar(50) NOT NULL default '0,',
+  `spells` varchar(50) NOT NULL default '0',
+  `towns` varchar(50) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM;
 END;

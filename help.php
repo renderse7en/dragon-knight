@@ -312,7 +312,7 @@ the heal spell. These may not be used during fights, however - you have to use t
 Please visit the following sites for more information:<br />
 <a href="http://www.se7enet.com" target="_new">Se7enet</a> (Jamin's homepage)<br />
 <a href="http://dragon.se7enet.com/dev.php" target="_new">Dragon Knight</a> (official DK homepage)<br />
-<a href="http://forums.se7enet.com" target="_new">Forums</a> (official DK forums)<br /><br />
+<a href="http://se7enet.com/eve" target="_new">Forums</a> (official DK forums)<br /><br />
 All original coding and graphics for the <i>Dragon Knight</i> game engine are &copy; 2003-2004 by Jamin Seven.<br /><br />
 [ <a href="#top">Top</a> ]
 <br /><br />

@@ -388,7 +388,7 @@ function victory() {
             $newlevel = $levelrow["id"];
             
             if ($levelrow[$userrow["charclass"]."_spells"] != 0) {
-                $userspells = $userrow["spells"] .= ",".$levelrow[$userrow["charclass"]."_spells"];
+                $userspells = $userrow["spells"] . ",".$levelrow[$userrow["charclass"]."_spells"];
                 $newspell = "spells='$userspells',";
                 $spelltext = "You have learned a new spell.<br />";
             } else { $spelltext = ""; $newspell=""; }
