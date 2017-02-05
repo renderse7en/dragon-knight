@@ -5,6 +5,7 @@ function inn() { // Staying at the inn resets all expendable stats to their max 
     global $userrow, $numqueries;
 
     $townquery = doquery("SELECT name,innprice FROM {{table}} WHERE latitude='".$userrow["latitude"]."' AND longitude='".$userrow["longitude"]."' LIMIT 1", "towns");
+    if (mysql_num_rows($townquery) != 1) { display("Cheat attempt detected.<br /><br />Get a life, loser."); }
     $townrow = mysql_fetch_array($townquery);
     
     if ($userrow["gold"] < $townrow["innprice"]) { display("You do not have enough gold to stay at this Inn tonight.<br /><br />You may return to <a href=\"index.php\">town</a>, or use the direction buttons on the left to start exploring.", "Inn"); die(); }
@@ -40,6 +41,7 @@ function buy() { // Displays a list of available items for purchase.
     global $userrow, $numqueries;
     
     $townquery = doquery("SELECT name,itemslist FROM {{table}} WHERE latitude='".$userrow["latitude"]."' AND longitude='".$userrow["longitude"]."' LIMIT 1", "towns");
+    if (mysql_num_rows($townquery) != 1) { display("Cheat attempt detected.<br /><br />Get a life, loser."); }
     $townrow = mysql_fetch_array($townquery);
     
     $itemslist = explode(",",$townrow["itemslist"]);

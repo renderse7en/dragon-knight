@@ -2,7 +2,7 @@
 
 $starttime = getmicrotime();
 $numqueries = 0;
-$version = "1.1.3a";
+$version = "1.1.4";
 $build = "";
 
 function opendb() { // Open database connection.
@@ -67,28 +67,16 @@ function is_email($email) { // Thanks to "mail(at)philipp-louis.de" from php.net
 
 }
 
-function my_htmlspecialchars($text) { // Thanks to "etymxris at yahoo dot com" from php.net!
+function makesafe($d) {
     
-  $ALLOWABLE_TAGS = array("b", "i", "u", "p", "blockquote", "ol", "ul", "li");
-  static $PATTERNS = array();
-  static $REPLACEMENTS = array();
-  if (count($PATTERNS) == 0) {
-   foreach ($ALLOWABLE_TAGS as $tag) {
-     $PATTERNS[] = "/&lt;$tag&gt;/i";
-     $PATTERNS[] = "/&lt;\/$tag&gt;/i";
-     $REPLACEMENTS[] = "<$tag>";
-     $REPLACEMENTS[] = "</$tag>";
-   }
-  }
-
-  $result = str_replace(array(">", "<", "\"", "'"),
-                       array("&gt;", "&lt;", "&quot;", "&#039;"),
-                       $text);
-
-  $result = preg_replace($PATTERNS, $REPLACEMENTS, $result);
-
-  return $result;
-  
+    $d = str_replace("\t","",$d);
+    $d = str_replace("<","&#60;",$d);
+    $d = str_replace(">","&#62;",$d);
+    $d = str_replace("\n","",$d);
+    $d = str_replace("|","??",$d);
+    $d = str_replace("  "," &nbsp;",$d);
+    return $d;
+    
 }
 
 function admindisplay($content, $title) { // Finalize page and output to browser.
