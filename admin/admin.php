@@ -1,6 +1,7 @@
 <?php // admin.php :: primary administration script.
 
-include('lib.php');
+include('../lib.php');
+include('../cookies.php');
 $link = opendb();
 $userrow = checkcookies();
 if ($userrow == false) { die("Please log in to the <a href=\"../login.php?do=login\">game</a> before using the control panel."); }
@@ -33,7 +34,7 @@ if (isset($_GET["do"])) {
 function donothing() {
     
     $page = "Welcome to the Dragon Knight Administration section. Use the links on the left bar to control and edit various elements of the game.<br /><br />Please note that the control panel has been created mostly as a shortcut for certain individual settings. It is meant for use primarily with editing one thing at a time. If you need to completely replace an entire table (say, to replace all stock monsters with your own new ones), it is suggested that you use a more in-depth database tool such as <a href=\"http://www.phpmyadmin.net\" target=\"_new\">phpMyAdmin</a>. Also, you may want to have a copy of the Dragon Knight development kit, available from the <a href=\"http://dragon.se7enet.com/dev.php\">Dragon Knight homepage</a>.<br /><br />Also, you should be aware that certain portions of the DK code are dependent on the formatting of certain database results (for example, the special attributes on item drops). While I have attempted to point these out throughout the admin script, you should definitely pay attention and be careful when editing some fields, because mistakes in the database content may result in script errors or your game breaking completely.";
-    display($page, "Admin Home");
+    admindisplay($page, "Admin Home");
     
 }
 
@@ -58,9 +59,9 @@ function main() {
         
         if ($errors == 0) { 
             $query = doquery("UPDATE {{table}} SET gamename='$gamename',gamesize='$gamesize',forumtype='$forumtype',forumaddress='$forumaddress',compression='$compression',class1name='$class1name',class2name='$class2name',class3name='$class3name',diff1name='$diff1name',diff2name='$diff2name',diff3name='$diff3name',diff2mod='$diff2mod',diff3mod='$diff3mod',gameopen='$gameopen',verifyemail='$verifyemail',gameurl='$gameurl',adminemail='$adminemail',shownews='$shownews',showonline='$showonline',showbabble='$showbabble' WHERE id='1' LIMIT 1", "control");
-            display("Settings updated.","Main Settings");
+            admindisplay("Settings updated.","Main Settings");
         } else {
-            display("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Main Settings");
+            admindisplay("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Main Settings");
         }
     }
     
@@ -113,7 +114,7 @@ END;
     if ($controlrow["gameopen"] == 0) { $controlrow["open0select"] = "selected=\"selected\" "; } else { $controlrow["open0select"] = ""; }
 
     $page = parsetemplate($page, $controlrow);
-    display($page, "Main Settings");
+    admindisplay($page, "Main Settings");
 
 }
 
@@ -128,7 +129,7 @@ function items() {
     }
     if (mysql_num_rows($query) == 0) { $page .= "<tr><td width=\"8%\" style=\"background-color: #eeeeee;\">No items found.</td></tr>\n"; }
     $page .= "</table>";
-    display($page, "Edit Items");
+    admindisplay($page, "Edit Items");
     
 }
 
@@ -148,9 +149,9 @@ function edititem($id) {
         
         if ($errors == 0) { 
             $query = doquery("UPDATE {{table}} SET name='$name',type='$type',buycost='$buycost',attribute='$attribute',special='$special' WHERE id='$id' LIMIT 1", "items");
-            display("Item updated.","Edit Items");
+            admindisplay("Item updated.","Edit Items");
         } else {
-            display("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit Items");
+            admindisplay("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit Items");
         }        
         
     }   
@@ -191,7 +192,7 @@ END;
     if ($row["type"] == 3) { $row["type3select"] = "selected=\"selected\" "; } else { $row["type3select"] = ""; }
     
     $page = parsetemplate($page, $row);
-    display($page, "Edit Items");
+    admindisplay($page, "Edit Items");
     
 }
 
@@ -206,7 +207,7 @@ function drops() {
     }
     if (mysql_num_rows($query) == 0) { $page .= "<tr><td width=\"8%\" style=\"background-color: #eeeeee;\">No items found.</td></tr>\n"; }
     $page .= "</table>";
-    display($page, "Edit Drops");
+    admindisplay($page, "Edit Drops");
     
 }
 
@@ -225,9 +226,9 @@ function editdrop($id) {
         
         if ($errors == 0) { 
             $query = doquery("UPDATE {{table}} SET name='$name',mlevel='$mlevel',attribute1='$attribute1',attribute2='$attribute2' WHERE id='$id' LIMIT 1", "drops");
-            display("Item updated.","Edit Drops");
+            admindisplay("Item updated.","Edit Drops");
         } else {
-            display("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit Drops");
+            admindisplay("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit Drops");
         }        
         
     }   
@@ -263,7 +264,7 @@ defensepower - total defense power
 END;
     
     $page = parsetemplate($page, $row);
-    display($page, "Edit Drops");
+    admindisplay($page, "Edit Drops");
     
 }
 
@@ -278,7 +279,7 @@ function towns() {
     }
     if (mysql_num_rows($query) == 0) { $page .= "<tr><td width=\"8%\" style=\"background-color: #eeeeee;\">No towns found.</td></tr>\n"; }
     $page .= "</table>";
-    display($page, "Edit Towns");
+    admindisplay($page, "Edit Towns");
     
 }
 
@@ -305,9 +306,9 @@ function edittown($id) {
         
         if ($errors == 0) { 
             $query = doquery("UPDATE {{table}} SET name='$name',latitude='$latitude',longitude='$longitude',innprice='$innprice',mapprice='$mapprice',travelpoints='$travelpoints',itemslist='$itemslist' WHERE id='$id' LIMIT 1", "towns");
-            display("Town updated.","Edit Towns");
+            admindisplay("Town updated.","Edit Towns");
         } else {
-            display("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit Towns");
+            admindisplay("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit Towns");
         }        
         
     }   
@@ -334,7 +335,7 @@ $page = <<<END
 END;
     
     $page = parsetemplate($page, $row);
-    display($page, "Edit Towns");
+    admindisplay($page, "Edit Towns");
     
 }
 
@@ -360,7 +361,7 @@ function monsters() {
     }
     if (mysql_num_rows($query) == 0) { $page .= "<tr><td width=\"8%\" style=\"background-color: #eeeeee;\">No towns found.</td></tr>\n"; }
     $page .= "</table>";
-    display($page, "Edit Monster");
+    admindisplay($page, "Edit Monster");
     
 }
 
@@ -387,9 +388,9 @@ function editmonster($id) {
         
         if ($errors == 0) { 
             $query = doquery("UPDATE {{table}} SET name='$name',maxhp='$maxhp',maxdam='$maxdam',armor='$armor',level='$level',maxexp='$maxexp',maxgold='$maxgold',immune='$immune' WHERE id='$id' LIMIT 1", "monsters");
-            display("Monster updated.","Edit monsters");
+            admindisplay("Monster updated.","Edit monsters");
         } else {
-            display("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit monsters");
+            admindisplay("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit monsters");
         }        
         
     }   
@@ -421,7 +422,7 @@ END;
     if ($row["immune"] == 3) { $row["immune3select"] = "selected=\"selected\" "; } else { $row["immune3select"] = ""; }
     
     $page = parsetemplate($page, $row);
-    display($page, "Edit Monsters");
+    admindisplay($page, "Edit Monsters");
     
 }
 
@@ -436,7 +437,7 @@ function spells() {
     }
     if (mysql_num_rows($query) == 0) { $page .= "<tr><td width=\"8%\" style=\"background-color: #eeeeee;\">No spells found.</td></tr>\n"; }
     $page .= "</table>";
-    display($page, "Edit Spells");
+    admindisplay($page, "Edit Spells");
     
 }
 
@@ -455,9 +456,9 @@ function editspell($id) {
         
         if ($errors == 0) { 
             $query = doquery("UPDATE {{table}} SET name='$name',mp='$mp',attribute='$attribute',type='$type' WHERE id='$id' LIMIT 1", "spells");
-            display("Spell updated.","Edit Spells");
+            admindisplay("Spell updated.","Edit Spells");
         } else {
-            display("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit Spells");
+            admindisplay("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit Spells");
         }        
         
     }   
@@ -487,7 +488,7 @@ END;
     if ($row["type"] == 5) { $row["type5select"] = "selected=\"selected\" "; } else { $row["type5select"] = ""; }
     
     $page = parsetemplate($page, $row);
-    display($page, "Edit Spells");
+    admindisplay($page, "Edit Spells");
     
 }
 
@@ -511,13 +512,13 @@ $options
 </form>
 END;
 
-    display($page, "Edit Levels");
+    admindisplay($page, "Edit Levels");
     
 }
 
 function editlevel() {
 
-    if (!isset($_POST["level"])) { display("No level to edit.", "Edit Levels"); die(); }
+    if (!isset($_POST["level"])) { admindisplay("No level to edit.", "Edit Levels"); die(); }
     $id = $_POST["level"];
     
     if (isset($_POST["submit"])) {
@@ -579,9 +580,9 @@ UPDATE {{table}} SET
 WHERE id='$id' LIMIT 1
 END;
 			$query = doquery($updatequery, "levels");
-            display("Level updated.","Edit Levels");
+            admindisplay("Level updated.","Edit Levels");
         } else {
-            display("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit Spells");
+            admindisplay("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit Spells");
         }        
         
     }   
@@ -637,7 +638,7 @@ Experience values for each level should be the cumulative total amount of experi
 END;
     
     $page = parsetemplate($page, $row);
-    display($page, "Edit Levels");
+    admindisplay($page, "Edit Levels");
     
 }
 
@@ -652,7 +653,7 @@ function users() {
     }
     if (mysql_num_rows($query) == 0) { $page .= "<tr><td width=\"8%\" style=\"background-color: #eeeeee;\">No spells found.</td></tr>\n"; }
     $page .= "</table>";
-    display($page, "Edit Users");
+    admindisplay($page, "Edit Users");
 
 }
 
@@ -767,9 +768,9 @@ slot1name="$slot1name", slot2name="$slot2name", slot3name="$slot3name", dropcode
 towns="$towns" WHERE id="$id" LIMIT 1
 END;
 			$query = doquery($updatequery, "users");
-            display("User updated.","Edit Users");
+            admindisplay("User updated.","Edit Users");
         } else {
-            display("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit Users");
+            admindisplay("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Edit Users");
         }        
         
     }   
@@ -873,7 +874,7 @@ END;
     if ($row["difficulty"] == 3) { $row["diff3select"] = "selected=\"selected\" "; } else { $row["diff3select"] = ""; }
     
     $page = parsetemplate($page, $row);
-    display($page, "Edit Users");
+    admindisplay($page, "Edit Users");
     
 }
 
@@ -888,9 +889,9 @@ function addnews() {
         
         if ($errors == 0) { 
             $query = doquery("INSERT INTO {{table}} SET id='',postdate=NOW(),content='$content'", "news");
-            display("News post added.","Add News");
+            admindisplay("News post added.","Add News");
         } else {
-            display("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Add News");
+            admindisplay("<b>Errors:</b><br /><div style=\"color:red;\">$errorlist</div><br />Please go back and try again.", "Add News");
         }        
         
     }   
@@ -904,7 +905,7 @@ Type your post below and then click Submit to add it.<br />
 </form>
 END;
     
-    display($page, "Add News");
+    admindisplay($page, "Add News");
     
 }
     

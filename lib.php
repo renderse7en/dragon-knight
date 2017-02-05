@@ -2,7 +2,7 @@
 
 $starttime = getmicrotime();
 $numqueries = 0;
-$version = "1.1.2";
+$version = "1.1.3";
 $build = "";
 
 function opendb() { // Open database connection.
@@ -89,6 +89,37 @@ function my_htmlspecialchars($text) { // Thanks to "etymxris at yahoo dot com" f
 
   return $result;
   
+}
+
+function admindisplay($content, $title) { // Finalize page and output to browser.
+    
+    global $numqueries, $userrow, $controlrow, $starttime, $version, $build;
+    if (!isset($controlrow)) {
+        $controlquery = doquery("SELECT * FROM {{table}} WHERE id='1' LIMIT 1", "control");
+        $controlrow = mysql_fetch_array($controlquery);
+    }
+    
+    $template = gettemplate("admin");
+    
+    // Make page tags for XHTML validation.
+    $xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
+    . "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"DTD/xhtml1-transitional.dtd\">\n"
+    . "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n";
+
+    $finalarray = array(
+        "title"=>$title,
+        "content"=>$content,
+        "totaltime"=>round(getmicrotime() - $starttime, 4),
+        "numqueries"=>$numqueries,
+        "version"=>$version,
+        "build"=>$build);
+    $page = parsetemplate($template, $finalarray);
+    $page = $xml . $page;
+
+    if ($controlrow["compression"] == 1) { ob_start("ob_gzhandler"); }
+    echo $page;
+    die();
+    
 }
 
 function display($content, $title, $topnav=true, $leftnav=true, $rightnav=true, $badstart=false) { // Finalize page and output to browser.
