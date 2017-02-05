@@ -335,6 +335,8 @@ function travelto($id, $usepoints=true) { // Send a user to a town from the Trav
     
     global $userrow, $numqueries;
     
+    if ($userrow["currentaction"] == "Fighting") { header("Location: index.php?do=fight"); die(); }
+    
     $townquery = doquery("SELECT name,travelpoints,latitude,longitude FROM {{table}} WHERE id='$id' LIMIT 1", "towns");
     $townrow = mysql_fetch_array($townquery);
     
