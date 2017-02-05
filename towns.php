@@ -274,7 +274,12 @@ function maps() { // List maps the user can buy.
         
         if ($townrow["latitude"] >= 0) { $latitude = $townrow["latitude"] . "N,"; } else { $latitude = ($townrow["latitude"]*-1) . "S,"; }
         if ($townrow["longitude"] >= 0) { $longitude = $townrow["longitude"] . "E"; } else { $longitude = ($townrow["longitude"]*-1) . "W"; }
-        if ($mappedtowns[$townrow["id"]] == 0) {
+        
+        $mapped = false;
+        foreach($mappedtowns as $a => $b) {
+            if ($b == $townrow["id"]) { $mapped = true; }
+        }
+        if ($mapped == false) {
             $page .= "<tr><td width=\"25%\"><a href=\"index.php?do=maps2:".$townrow["id"]."\">".$townrow["name"]."</a></td><td width=\"25%\">Price: ".$townrow["mapprice"]." gold</td><td width=\"50%\" colspan=\"2\">Buy map to reveal details.</td></tr>\n";
         } else {
             $page .= "<tr><td width=\"25%\"><span class=\"light\">".$townrow["name"]."</span></td><td width=\"25%\"><span class=\"light\">Already mapped.</span></td><td width=\"35%\"><span class=\"light\">Location: $latitude $longitude</span></td><td width=\"15%\"><span class=\"light\">TP: ".$townrow["travelpoints"]."</span></td></tr>\n";
@@ -315,9 +320,7 @@ function maps3($id) { // Add new map to user's profile.
     
     if ($userrow["gold"] < $townrow["mapprice"]) { display("You do not have enough gold to buy this map.<br /><br />You may return to <a href=\"index.php\">town</a>, <a href=\"index.php?do=maps\">store</a>, or use the direction buttons on the left to start exploring.", "Buy Maps"); die(); }
     
-    $mappedtowns = explode(",",$userrow["towns"]);
-    $mappedtowns[$id] = 1;
-    $mappedtowns = implode(",",$mappedtowns);
+    $mappedtowns = $userrow["towns"].",$id";
     $newgold = $userrow["gold"] - $townrow["mapprice"];
     
     $updatequery = doquery("UPDATE {{table}} SET towns='$mappedtowns',gold='$newgold' WHERE id='".$userrow["id"]."' LIMIT 1", "users");

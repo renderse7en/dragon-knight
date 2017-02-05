@@ -203,14 +203,15 @@ function mymail($to, $title, $body, $from = '') { // thanks to arto dot PLEASE d
     $controlquery = doquery("SELECT * FROM {{table}} WHERE id='1' LIMIT 1", "control");
     $controlrow = mysql_fetch_array($controlquery);
     extract($controlrow);
+    
 
   $from = trim($from);
 
   if (!$from) {
-   $from = 'Dragon Knight <$adminemail>';
+   $from = '<'.$controlrow["adminemail"].'>';
   }
 
-  $rp    = '$adminemail';
+  $rp    = $controlrow["adminemail"];
   $org    = '$gameurl';
   $mailer = 'PHP';
 
