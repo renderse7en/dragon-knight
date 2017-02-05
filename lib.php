@@ -2,7 +2,7 @@
 
 $starttime = getmicrotime();
 $numqueries = 0;
-$version = "1.1.5";
+$version = "1.1.6";
 $build = "";
 
 function opendb() { // Open database connection.

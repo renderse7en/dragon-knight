@@ -526,57 +526,57 @@ function editlevel() {
         extract($_POST);
         $errors = 0;
         $errorlist = "";
-        if ($_POST["1_exp"] == "") { $errors++; $errorlist .= "Class 1 Experience is required.<br />"; }
-        if ($_POST["1_hp"] == "") { $errors++; $errorlist .= "Class 1 HP is required.<br />"; }
-        if ($_POST["1_mp"] == "") { $errors++; $errorlist .= "Class 1 MP is required.<br />"; }
-        if ($_POST["1_tp"] == "") { $errors++; $errorlist .= "Class 1 TP is required.<br />"; }
-        if ($_POST["1_strength"] == "") { $errors++; $errorlist .= "Class 1 Strength is required.<br />"; }
-        if ($_POST["1_dexterity"] == "") { $errors++; $errorlist .= "Class 1 Dexterity is required.<br />"; }
-        if ($_POST["1_spells"] == "") { $errors++; $errorlist .= "Class 1 Spells is required.<br />"; }
-        if (!is_numeric($_POST["1_exp"])) { $errors++; $errorlist .= "Class 1 Experience must be a number.<br />"; }
-        if (!is_numeric($_POST["1_hp"])) { $errors++; $errorlist .= "Class 1 HP must be a number.<br />"; }
-        if (!is_numeric($_POST["1_mp"])) { $errors++; $errorlist .= "Class 1 MP must be a number.<br />"; }
-        if (!is_numeric($_POST["1_tp"])) { $errors++; $errorlist .= "Class 1 TP must be a number.<br />"; }
-        if (!is_numeric($_POST["1_strength"])) { $errors++; $errorlist .= "Class 1 Strength must be a number.<br />"; }
-        if (!is_numeric($_POST["1_dexterity"])) { $errors++; $errorlist .= "Class 1 Dexterity must be a number.<br />"; }
-        if (!is_numeric($_POST["1_spells"])) { $errors++; $errorlist .= "Class 1 Spells must be a number.<br />"; }
+        if ($_POST["one_exp"] == "") { $errors++; $errorlist .= "Class 1 Experience is required.<br />"; }
+        if ($_POST["one_hp"] == "") { $errors++; $errorlist .= "Class 1 HP is required.<br />"; }
+        if ($_POST["one_mp"] == "") { $errors++; $errorlist .= "Class 1 MP is required.<br />"; }
+        if ($_POST["one_tp"] == "") { $errors++; $errorlist .= "Class 1 TP is required.<br />"; }
+        if ($_POST["one_strength"] == "") { $errors++; $errorlist .= "Class 1 Strength is required.<br />"; }
+        if ($_POST["one_dexterity"] == "") { $errors++; $errorlist .= "Class 1 Dexterity is required.<br />"; }
+        if ($_POST["one_spells"] == "") { $errors++; $errorlist .= "Class 1 Spells is required.<br />"; }
+        if (!is_numeric($_POST["one_exp"])) { $errors++; $errorlist .= "Class 1 Experience must be a number.<br />"; }
+        if (!is_numeric($_POST["one_hp"])) { $errors++; $errorlist .= "Class 1 HP must be a number.<br />"; }
+        if (!is_numeric($_POST["one_mp"])) { $errors++; $errorlist .= "Class 1 MP must be a number.<br />"; }
+        if (!is_numeric($_POST["one_tp"])) { $errors++; $errorlist .= "Class 1 TP must be a number.<br />"; }
+        if (!is_numeric($_POST["one_strength"])) { $errors++; $errorlist .= "Class 1 Strength must be a number.<br />"; }
+        if (!is_numeric($_POST["one_dexterity"])) { $errors++; $errorlist .= "Class 1 Dexterity must be a number.<br />"; }
+        if (!is_numeric($_POST["one_spells"])) { $errors++; $errorlist .= "Class 1 Spells must be a number.<br />"; }
 
-        if ($_POST["2_exp"] == "") { $errors++; $errorlist .= "Class 2 Experience is required.<br />"; }
-        if ($_POST["2_hp"] == "") { $errors++; $errorlist .= "Class 2 HP is required.<br />"; }
-        if ($_POST["2_mp"] == "") { $errors++; $errorlist .= "Class 2 MP is required.<br />"; }
-        if ($_POST["2_tp"] == "") { $errors++; $errorlist .= "Class 2 TP is required.<br />"; }
-        if ($_POST["2_strength"] == "") { $errors++; $errorlist .= "Class 2 Strength is required.<br />"; }
-        if ($_POST["2_dexterity"] == "") { $errors++; $errorlist .= "Class 2 Dexterity is required.<br />"; }
-        if ($_POST["2_spells"] == "") { $errors++; $errorlist .= "Class 2 Spells is required.<br />"; }
-        if (!is_numeric($_POST["2_exp"])) { $errors++; $errorlist .= "Class 2 Experience must be a number.<br />"; }
-        if (!is_numeric($_POST["2_hp"])) { $errors++; $errorlist .= "Class 2 HP must be a number.<br />"; }
-        if (!is_numeric($_POST["2_mp"])) { $errors++; $errorlist .= "Class 2 MP must be a number.<br />"; }
-        if (!is_numeric($_POST["2_tp"])) { $errors++; $errorlist .= "Class 2 TP must be a number.<br />"; }
-        if (!is_numeric($_POST["2_strength"])) { $errors++; $errorlist .= "Class 2 Strength must be a number.<br />"; }
-        if (!is_numeric($_POST["2_dexterity"])) { $errors++; $errorlist .= "Class 2 Dexterity must be a number.<br />"; }
-        if (!is_numeric($_POST["2_spells"])) { $errors++; $errorlist .= "Class 2 Spells must be a number.<br />"; }
+        if ($_POST["two_exp"] == "") { $errors++; $errorlist .= "Class 2 Experience is required.<br />"; }
+        if ($_POST["two_hp"] == "") { $errors++; $errorlist .= "Class 2 HP is required.<br />"; }
+        if ($_POST["two_mp"] == "") { $errors++; $errorlist .= "Class 2 MP is required.<br />"; }
+        if ($_POST["two_tp"] == "") { $errors++; $errorlist .= "Class 2 TP is required.<br />"; }
+        if ($_POST["two_strength"] == "") { $errors++; $errorlist .= "Class 2 Strength is required.<br />"; }
+        if ($_POST["two_dexterity"] == "") { $errors++; $errorlist .= "Class 2 Dexterity is required.<br />"; }
+        if ($_POST["two_spells"] == "") { $errors++; $errorlist .= "Class 2 Spells is required.<br />"; }
+        if (!is_numeric($_POST["two_exp"])) { $errors++; $errorlist .= "Class 2 Experience must be a number.<br />"; }
+        if (!is_numeric($_POST["two_hp"])) { $errors++; $errorlist .= "Class 2 HP must be a number.<br />"; }
+        if (!is_numeric($_POST["two_mp"])) { $errors++; $errorlist .= "Class 2 MP must be a number.<br />"; }
+        if (!is_numeric($_POST["two_tp"])) { $errors++; $errorlist .= "Class 2 TP must be a number.<br />"; }
+        if (!is_numeric($_POST["two_strength"])) { $errors++; $errorlist .= "Class 2 Strength must be a number.<br />"; }
+        if (!is_numeric($_POST["two_dexterity"])) { $errors++; $errorlist .= "Class 2 Dexterity must be a number.<br />"; }
+        if (!is_numeric($_POST["two_spells"])) { $errors++; $errorlist .= "Class 2 Spells must be a number.<br />"; }
                 
-        if ($_POST["3_exp"] == "") { $errors++; $errorlist .= "Class 3 Experience is required.<br />"; }
-        if ($_POST["3_hp"] == "") { $errors++; $errorlist .= "Class 3 HP is required.<br />"; }
-        if ($_POST["3_mp"] == "") { $errors++; $errorlist .= "Class 3 MP is required.<br />"; }
-        if ($_POST["3_tp"] == "") { $errors++; $errorlist .= "Class 3 TP is required.<br />"; }
-        if ($_POST["3_strength"] == "") { $errors++; $errorlist .= "Class 3 Strength is required.<br />"; }
-        if ($_POST["3_dexterity"] == "") { $errors++; $errorlist .= "Class 3 Dexterity is required.<br />"; }
-        if ($_POST["3_spells"] == "") { $errors++; $errorlist .= "Class 3 Spells is required.<br />"; }
-        if (!is_numeric($_POST["3_exp"])) { $errors++; $errorlist .= "Class 3 Experience must be a number.<br />"; }
-        if (!is_numeric($_POST["3_hp"])) { $errors++; $errorlist .= "Class 3 HP must be a number.<br />"; }
-        if (!is_numeric($_POST["3_mp"])) { $errors++; $errorlist .= "Class 3 MP must be a number.<br />"; }
-        if (!is_numeric($_POST["3_tp"])) { $errors++; $errorlist .= "Class 3 TP must be a number.<br />"; }
-        if (!is_numeric($_POST["3_strength"])) { $errors++; $errorlist .= "Class 3 Strength must be a number.<br />"; }
-        if (!is_numeric($_POST["3_dexterity"])) { $errors++; $errorlist .= "Class 3 Dexterity must be a number.<br />"; }
-        if (!is_numeric($_POST["3_spells"])) { $errors++; $errorlist .= "Class 3 Spells must be a number.<br />"; }
+        if ($_POST["three_exp"] == "") { $errors++; $errorlist .= "Class 3 Experience is required.<br />"; }
+        if ($_POST["three_hp"] == "") { $errors++; $errorlist .= "Class 3 HP is required.<br />"; }
+        if ($_POST["three_mp"] == "") { $errors++; $errorlist .= "Class 3 MP is required.<br />"; }
+        if ($_POST["three_tp"] == "") { $errors++; $errorlist .= "Class 3 TP is required.<br />"; }
+        if ($_POST["three_strength"] == "") { $errors++; $errorlist .= "Class 3 Strength is required.<br />"; }
+        if ($_POST["three_dexterity"] == "") { $errors++; $errorlist .= "Class 3 Dexterity is required.<br />"; }
+        if ($_POST["three_spells"] == "") { $errors++; $errorlist .= "Class 3 Spells is required.<br />"; }
+        if (!is_numeric($_POST["three_exp"])) { $errors++; $errorlist .= "Class 3 Experience must be a number.<br />"; }
+        if (!is_numeric($_POST["three_hp"])) { $errors++; $errorlist .= "Class 3 HP must be a number.<br />"; }
+        if (!is_numeric($_POST["three_mp"])) { $errors++; $errorlist .= "Class 3 MP must be a number.<br />"; }
+        if (!is_numeric($_POST["three_tp"])) { $errors++; $errorlist .= "Class 3 TP must be a number.<br />"; }
+        if (!is_numeric($_POST["three_strength"])) { $errors++; $errorlist .= "Class 3 Strength must be a number.<br />"; }
+        if (!is_numeric($_POST["three_dexterity"])) { $errors++; $errorlist .= "Class 3 Dexterity must be a number.<br />"; }
+        if (!is_numeric($_POST["three_spells"])) { $errors++; $errorlist .= "Class 3 Spells must be a number.<br />"; }
 
         if ($errors == 0) { 
 $updatequery = <<<END
 UPDATE {{table}} SET
-1_exp='$1_exp', 1_hp='$1_hp', 1_mp='$1_mp', 1_tp='$1_tp', 1_strength='$1_strength', 1_dexterity='$1_dexterity', 1_spells='$1_spells',
-2_exp='$2_exp', 2_hp='$2_hp', 2_mp='$2_mp', 2_tp='$2_tp', 2_strength='$2_strength', 2_dexterity='$2_dexterity', 2_spells='$2_spells',
-3_exp='$3_exp', 3_hp='$3_hp', 3_mp='$3_mp', 3_tp='$3_tp', 3_strength='$3_strength', 3_dexterity='$3_dexterity', 3_spells='$3_spells'
+1_exp='$one_exp', 1_hp='$one_hp', 1_mp='$one_mp', 1_tp='$one_tp', 1_strength='$one_strength', 1_dexterity='$one_dexterity', 1_spells='$one_spells',
+2_exp='$two_exp', 2_hp='$two_hp', 2_mp='$two_mp', 2_tp='$two_tp', 2_strength='$two_strength', 2_dexterity='$two_dexterity', 2_spells='$two_spells',
+3_exp='$three_exp', 3_hp='$three_hp', 3_mp='$three_mp', 3_tp='$three_tp', 3_strength='$three_strength', 3_dexterity='$three_dexterity', 3_spells='$three_spells'
 WHERE id='$id' LIMIT 1
 END;
 			$query = doquery($updatequery, "levels");
@@ -605,33 +605,33 @@ Experience values for each level should be the cumulative total amount of experi
 
 <tr><td colspan="2" style="background-color:#cccccc;">&nbsp;</td></tr>
 
-<tr><td width="20%">$class1name Experience:</td><td><input type="text" name="1_exp" size="10" maxlength="8" value="{{1_exp}}" /></td></tr>
-<tr><td width="20%">$class1name HP:</td><td><input type="text" name="1_hp" size="5" maxlength="5" value="{{1_hp}}" /></td></tr>
-<tr><td width="20%">$class1name MP:</td><td><input type="text" name="1_mp" size="5" maxlength="5" value="{{1_mp}}" /></td></tr>
-<tr><td width="20%">$class1name TP:</td><td><input type="text" name="1_tp" size="5" maxlength="5" value="{{1_tp}}" /></td></tr>
-<tr><td width="20%">$class1name Strength:</td><td><input type="text" name="1_strength" size="5" maxlength="5" value="{{1_strength}}" /></td></tr>
-<tr><td width="20%">$class1name Dexterity:</td><td><input type="text" name="1_dexterity" size="5" maxlength="5" value="{{1_dexterity}}" /></td></tr>
-<tr><td width="20%">$class1name Spells:</td><td><input type="text" name="1_spells" size="5" maxlength="3" value="{{1_spells}}" /></td></tr>
+<tr><td width="20%">$class1name Experience:</td><td><input type="text" name="one_exp" size="10" maxlength="8" value="{{1_exp}}" /></td></tr>
+<tr><td width="20%">$class1name HP:</td><td><input type="text" name="one_hp" size="5" maxlength="5" value="{{1_hp}}" /></td></tr>
+<tr><td width="20%">$class1name MP:</td><td><input type="text" name="one_mp" size="5" maxlength="5" value="{{1_mp}}" /></td></tr>
+<tr><td width="20%">$class1name TP:</td><td><input type="text" name="one_tp" size="5" maxlength="5" value="{{1_tp}}" /></td></tr>
+<tr><td width="20%">$class1name Strength:</td><td><input type="text" name="one_strength" size="5" maxlength="5" value="{{1_strength}}" /></td></tr>
+<tr><td width="20%">$class1name Dexterity:</td><td><input type="text" name="one_dexterity" size="5" maxlength="5" value="{{1_dexterity}}" /></td></tr>
+<tr><td width="20%">$class1name Spells:</td><td><input type="text" name="one_spells" size="5" maxlength="3" value="{{1_spells}}" /></td></tr>
 
 <tr><td colspan="2" style="background-color:#cccccc;">&nbsp;</td></tr>
 
-<tr><td width="20%">$class2name Experience:</td><td><input type="text" name="2_exp" size="10" maxlength="8" value="{{2_exp}}" /></td></tr>
-<tr><td width="20%">$class2name HP:</td><td><input type="text" name="2_hp" size="5" maxlength="5" value="{{2_hp}}" /></td></tr>
-<tr><td width="20%">$class2name MP:</td><td><input type="text" name="2_mp" size="5" maxlength="5" value="{{2_mp}}" /></td></tr>
-<tr><td width="20%">$class2name TP:</td><td><input type="text" name="2_tp" size="5" maxlength="5" value="{{2_tp}}" /></td></tr>
-<tr><td width="20%">$class2name Strength:</td><td><input type="text" name="2_strength" size="5" maxlength="5" value="{{2_strength}}" /></td></tr>
-<tr><td width="20%">$class2name Dexterity:</td><td><input type="text" name="2_dexterity" size="5" maxlength="5" value="{{2_dexterity}}" /></td></tr>
-<tr><td width="20%">$class2name Spells:</td><td><input type="text" name="2_spells" size="5" maxlength="3" value="{{2_spells}}" /></td></tr>
+<tr><td width="20%">$class2name Experience:</td><td><input type="text" name="two_exp" size="10" maxlength="8" value="{{2_exp}}" /></td></tr>
+<tr><td width="20%">$class2name HP:</td><td><input type="text" name="two_hp" size="5" maxlength="5" value="{{2_hp}}" /></td></tr>
+<tr><td width="20%">$class2name MP:</td><td><input type="text" name="two_mp" size="5" maxlength="5" value="{{2_mp}}" /></td></tr>
+<tr><td width="20%">$class2name TP:</td><td><input type="text" name="two_tp" size="5" maxlength="5" value="{{2_tp}}" /></td></tr>
+<tr><td width="20%">$class2name Strength:</td><td><input type="text" name="two_strength" size="5" maxlength="5" value="{{2_strength}}" /></td></tr>
+<tr><td width="20%">$class2name Dexterity:</td><td><input type="text" name="two_dexterity" size="5" maxlength="5" value="{{2_dexterity}}" /></td></tr>
+<tr><td width="20%">$class2name Spells:</td><td><input type="text" name="two_spells" size="5" maxlength="3" value="{{2_spells}}" /></td></tr>
 
 <tr><td colspan="2" style="background-color:#cccccc;">&nbsp;</td></tr>
 
-<tr><td width="20%">$class3name Experience:</td><td><input type="text" name="3_exp" size="10" maxlength="8" value="{{3_exp}}" /></td></tr>
-<tr><td width="20%">$class3name HP:</td><td><input type="text" name="3_hp" size="5" maxlength="5" value="{{3_hp}}" /></td></tr>
-<tr><td width="20%">$class3name MP:</td><td><input type="text" name="3_mp" size="5" maxlength="5" value="{{3_mp}}" /></td></tr>
-<tr><td width="20%">$class3name TP:</td><td><input type="text" name="3_tp" size="5" maxlength="5" value="{{3_tp}}" /></td></tr>
-<tr><td width="20%">$class3name Strength:</td><td><input type="text" name="3_strength" size="5" maxlength="5" value="{{3_strength}}" /></td></tr>
-<tr><td width="20%">$class3name Dexterity:</td><td><input type="text" name="3_dexterity" size="5" maxlength="5" value="{{3_dexterity}}" /></td></tr>
-<tr><td width="20%">$class3name Spells:</td><td><input type="text" name="3_spells" size="5" maxlength="3" value="{{3_spells}}" /></td></tr>
+<tr><td width="20%">$class3name Experience:</td><td><input type="text" name="three_exp" size="10" maxlength="8" value="{{3_exp}}" /></td></tr>
+<tr><td width="20%">$class3name HP:</td><td><input type="text" name="three_hp" size="5" maxlength="5" value="{{3_hp}}" /></td></tr>
+<tr><td width="20%">$class3name MP:</td><td><input type="text" name="three_mp" size="5" maxlength="5" value="{{3_mp}}" /></td></tr>
+<tr><td width="20%">$class3name TP:</td><td><input type="text" name="three_tp" size="5" maxlength="5" value="{{3_tp}}" /></td></tr>
+<tr><td width="20%">$class3name Strength:</td><td><input type="text" name="three_strength" size="5" maxlength="5" value="{{3_strength}}" /></td></tr>
+<tr><td width="20%">$class3name Dexterity:</td><td><input type="text" name="three_dexterity" size="5" maxlength="5" value="{{3_dexterity}}" /></td></tr>
+<tr><td width="20%">$class3name Spells:</td><td><input type="text" name="three_spells" size="5" maxlength="3" value="{{3_spells}}" /></td></tr>
 </table>
 <input type="submit" name="submit" value="Submit" /> <input type="reset" name="reset" value="Reset" />
 </form>

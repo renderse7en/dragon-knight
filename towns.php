@@ -5,7 +5,7 @@ function inn() { // Staying at the inn resets all expendable stats to their max 
     global $userrow, $numqueries;
 
     $townquery = doquery("SELECT name,innprice FROM {{table}} WHERE latitude='".$userrow["latitude"]."' AND longitude='".$userrow["longitude"]."' LIMIT 1", "towns");
-    if (mysql_num_rows($townquery) != 1) { display("Cheat attempt detected.<br /><br />Get a life, loser."); }
+    if (mysql_num_rows($townquery) != 1) { display("Cheat attempt detected.<br /><br />Get a life, loser.", "Error"); }
     $townrow = mysql_fetch_array($townquery);
     
     if ($userrow["gold"] < $townrow["innprice"]) { display("You do not have enough gold to stay at this Inn tonight.<br /><br />You may return to <a href=\"index.php\">town</a>, or use the direction buttons on the left to start exploring.", "Inn"); die(); }
@@ -41,7 +41,7 @@ function buy() { // Displays a list of available items for purchase.
     global $userrow, $numqueries;
     
     $townquery = doquery("SELECT name,itemslist FROM {{table}} WHERE latitude='".$userrow["latitude"]."' AND longitude='".$userrow["longitude"]."' LIMIT 1", "towns");
-    if (mysql_num_rows($townquery) != 1) { display("Cheat attempt detected.<br /><br />Get a life, loser."); }
+    if (mysql_num_rows($townquery) != 1) { display("Cheat attempt detected.<br /><br />Get a life, loser.", "Error"); }
     $townrow = mysql_fetch_array($townquery);
     
     $itemslist = explode(",",$townrow["itemslist"]);
@@ -78,6 +78,12 @@ function buy() { // Displays a list of available items for purchase.
 function buy2($id) { // Confirm user's intent to purchase item.
     
     global $userrow, $numqueries;
+    
+    $townquery = doquery("SELECT name,itemslist FROM {{table}} WHERE latitude='".$userrow["latitude"]."' AND longitude='".$userrow["longitude"]."' LIMIT 1", "towns");
+    if (mysql_num_rows($townquery) != 1) { display("Cheat attempt detected.<br /><br />Get a life, loser.", "Error"); }
+    $townrow = mysql_fetch_array($townquery);
+    $townitems = explode(",",$townrow["itemslist"]);
+    if (! in_array($id, $townitems)) { display("Cheat attempt detected.<br /><br />Get a life, loser.", "Error"); }
     
     $itemsquery = doquery("SELECT * FROM {{table}} WHERE id='$id' LIMIT 1", "items");
     $itemsrow = mysql_fetch_array($itemsquery);
@@ -120,6 +126,12 @@ function buy3($id) { // Update user profile with new item & stats.
     if (isset($_POST["cancel"])) { header("Location: index.php"); die(); }
     
     global $userrow;
+    
+    $townquery = doquery("SELECT name,itemslist FROM {{table}} WHERE latitude='".$userrow["latitude"]."' AND longitude='".$userrow["longitude"]."' LIMIT 1", "towns");
+    if (mysql_num_rows($townquery) != 1) { display("Cheat attempt detected.<br /><br />Get a life, loser.", "Error"); }
+    $townrow = mysql_fetch_array($townquery);
+    $townitems = explode(",",$townrow["itemslist"]);
+    if (! in_array($id, $townitems)) { display("Cheat attempt detected.<br /><br />Get a life, loser.", "Error"); }
     
     $itemsquery = doquery("SELECT * FROM {{table}} WHERE id='$id' LIMIT 1", "items");
     $itemsrow = mysql_fetch_array($itemsquery);
@@ -343,7 +355,9 @@ function travelto($id, $usepoints=true) { // Send a user to a town from the Trav
     if ($usepoints==true) { 
         if ($userrow["currenttp"] < $townrow["travelpoints"]) { 
             display("You do not have enough TP to travel here. Please go back and try again when you get more TP.", "Travel To"); die(); 
-        } 
+        }
+        $mapped = explode(",",$userrow["towns"]);
+        if (!in_array($id, $mapped)) { display("Cheat attempt detected.<br /><br />Get a life, loser.", "Error"); }
     }
     
     if (($userrow["latitude"] == $townrow["latitude"]) && ($userrow["longitude"] == $townrow["longitude"])) { display("You are already in this town. <a href=\"index.php\">Click here</a> to return to the main town screen.", "Travel To"); die(); }

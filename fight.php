@@ -189,7 +189,7 @@ function fight() { // One big long function that determines the outcome of the f
         foreach($userspells as $a => $b) {
             if ($b == $pickedspell) { $spell = true; }
         }
-        if ($pickedspell != true) { display("You have not yet learned this spell. Please go back and try again.", "Error"); die(); }
+        if ($spell != true) { display("You have not yet learned this spell. Please go back and try again.", "Error"); die(); }
         if ($userrow["currentmp"] < $newspellrow["mp"]) { display("You do not have enough Magic Points to cast this spell. Please go back and try again.", "Error"); die(); }
         
         if ($newspellrow["type"] == 1) { // Heal spell.
