@@ -1,4 +1,7 @@
 # Dragon Knight
+- See also: [Dragon Scourge](https://github.com/renderse7en/dragon-scourge)
+- [Live Demo](http://dragon.se7enet.com/)
+
 Many years ago, when I was young and dumb, I wrote a simple little game based on the game *Dragon Warrior* for the NES. It was fun, it helped me learn how to code, and a lot of people liked it.
 I am now turning it over to the open source community. Fork it, do what you want, make it your own.
 Couple things to keep in mind though:
