@@ -4,7 +4,7 @@ if (file_exists('install.php')) { die("Please delete <b>install.php</b> from you
 include('lib.php');
 include('cookies.php');
 $link = opendb();
-$controlquery = doquery("SELECT * FROM {{table}} WHERE id='1' LIMIT 1", "control");
+$controlquery = doquery("SELECT * FROM {{table}} WHERE id=1 LIMIT 1", "control");
 $controlrow = mysql_fetch_array($controlquery);
 
 // Login (or verify) if not logged in.
