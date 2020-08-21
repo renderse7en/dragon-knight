@@ -1,5 +1,13 @@
 <?php // lib.php :: Common functions used throughout the program.
 
+/**
+ * This brings in a shim that allows the (unsafe) usage
+ * of old mysql_ functions. It's a very temporary, very
+ * undesirable fix for the project.
+ * Credit: @dshafik https://github.com/dshafik/php7-mysql-shim
+ */
+require 'lib/mysql-shim.php';
+
 $starttime = getmicrotime();
 $numqueries = 0;
 $version = "1.1.11";
@@ -133,9 +141,8 @@ function admindisplay($content, $title) { // Finalize page and output to browser
     $template = gettemplate("admin");
     
     // Make page tags for XHTML validation.
-    $xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
-    . "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"DTD/xhtml1-transitional.dtd\">\n"
-    . "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n";
+    $xml = "<!DOCTYPE html>\n"
+    . "<html lang=\"en\">\n";
 
     $finalarray = array(
         "title"=>$title,
@@ -163,9 +170,8 @@ function display($content, $title, $topnav=true, $leftnav=true, $rightnav=true, 
     if ($badstart == false) { global $starttime; } else { $starttime = $badstart; }
     
     // Make page tags for XHTML validation.
-    $xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
-    . "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"DTD/xhtml1-transitional.dtd\">\n"
-    . "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n";
+    $xml = "<!DOCTYPE html>\n"
+    . "<html lang=\"en\">\n";
 
     $template = gettemplate("primary");
     
@@ -276,8 +282,7 @@ function display($content, $title, $topnav=true, $leftnav=true, $rightnav=true, 
         "build"=>$build);
     $page = parsetemplate($template, $finalarray);
     $page = $xml . $page;
-    
-    if ($controlrow["compression"] == 1) { ob_start("ob_gzhandler"); }
+
     echo $page;
     die();
     
