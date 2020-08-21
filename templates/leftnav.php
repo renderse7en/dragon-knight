@@ -1,3 +1,5 @@
+<?php
+$template = <<<THEVERYENDOFYOU
 <table width="100%">
 <tr><td class="title"><img src="images/button_location.gif" alt="Location" title="Location" /></td></tr>
 <tr><td>
@@ -34,3 +36,5 @@ Travel To:<br />
 <a href="help.php">Help</a>
 </td></tr>
 </table><br />
+THEVERYENDOFYOU;
+?>

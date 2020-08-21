@@ -1,3 +1,5 @@
+<?php
+$template = <<<THEVERYENDOFYOU
 <table width="100%">
 <tr><td class="title"><img src="images/town_{{id}}.gif" alt="Welcome to {{name}}" title="Welcome to {{name}}" /></td></tr>
 <tr><td>
@@ -20,3 +22,5 @@
 </table>
 </td></tr>
 </table>
+THEVERYENDOFYOU;
+?>

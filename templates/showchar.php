@@ -1,3 +1,5 @@
+<?php
+$template = <<<THEVERYENDOFYOU
 <table width="100%">
 <tr><td class="title"><img src="images/button_character.gif" alt="Character" title="Character" /></td></tr>
 <tr><td>
@@ -41,3 +43,5 @@ Slot 3: {{slot3name}}
 {{magiclist}}
 </td></tr>
 </table><br />
+THEVERYENDOFYOU;
+?>

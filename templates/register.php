@@ -1,3 +1,5 @@
+<?php
+$template = <<<THEVERYENDOFYOU
 <form action="users.php?do=register" method="post">
 <table width="80%">
 <tr><td width="20%">Username:</td><td><input type="text" name="username" size="30" maxlength="30" /><br />Usernames must be 30 alphanumeric characters or less.<br /><br /><br /></td></tr>
@@ -12,3 +14,5 @@
 <tr><td colspan="2"><input type="submit" name="submit" value="Submit" /> <input type="reset" name="reset" value="Reset" /></td></tr>
 </table>
 </form>
+THEVERYENDOFYOU;
+?>

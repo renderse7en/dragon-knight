@@ -1,3 +1,5 @@
+<?php
+$template = <<<THEVERYENDOFYOU
 <head>
 <title>{{title}}</title>
 <style type="text/css">
@@ -62,3 +64,5 @@ a:hover {
 {{content}}
 </center></body>
 </html>
+THEVERYENDOFYOU;
+?>

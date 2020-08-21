@@ -1,3 +1,5 @@
+<?php
+$template = <<<THEVERYENDOFYOU
 <form action="users.php?do=changepassword" method="post">
 <table width="100%">
 <tr><td colspan="2">Use the form below to change your password. All fields are required. New passwords must be 10 alphanumeric characters or less.</td></tr>
@@ -8,3 +10,5 @@
 <tr><td colspan="2"><input type="submit" name="submit" value="Submit" /> <input type="reset" name="reset" value="Reset" /></td></tr>
 </table>
 </form>
+THEVERYENDOFYOU;
+?>

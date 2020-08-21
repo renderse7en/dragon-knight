@@ -1,3 +1,5 @@
+<?php
+$template = <<<THEVERYENDOFYOU
 <head>
 <title>shoutbox</title>
 <style type="text/css">
@@ -28,3 +30,5 @@ a:hover {
 {{content}}
 </body>
 </html>
+THEVERYENDOFYOU;
+?>

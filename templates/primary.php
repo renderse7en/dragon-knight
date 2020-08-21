@@ -1,3 +1,5 @@
+<?php
+$template = <<<THEVERYENDOFYOU
 <head>
 <title>{{title}}</title>
 <style type="text/css">
@@ -84,3 +86,5 @@ winpops=window.open(popurl,"","width=520,height=520,scrollbars")
 </tr></table>
 </center></body>
 </html>
+THEVERYENDOFYOU;
+?>

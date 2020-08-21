@@ -37,7 +37,7 @@ function doquery($query, $table) { // Something of a tiny little database abstra
  * Retrieve a template from the template directory
  */
 function gettemplate(string $template) {
-    $path = 'templates/' . $template . '.html';
+    $path = 'templates/' . $template . '.php';
 
     if (!is_readable($path)) {
         throw new Exception('Unable to get template <<' . $template . '>>');
