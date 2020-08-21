@@ -13,49 +13,6 @@ $numqueries = 0;
 $version = "1.1.11";
 $build = "";
 
-// Handling for servers with magic_quotes turned on.
-// Example from php.net.
-if (get_magic_quotes_gpc()) {
-
-   $_POST = array_map('stripslashes_deep', $_POST);
-   $_GET = array_map('stripslashes_deep', $_GET);
-   $_COOKIE = array_map('stripslashes_deep', $_COOKIE);
-
-}
-$_POST = array_map('addslashes_deep', $_POST);
-$_POST = array_map('html_deep', $_POST);
-$_GET = array_map('addslashes_deep', $_GET);
-$_GET = array_map('html_deep', $_GET);
-$_COOKIE = array_map('addslashes_deep', $_COOKIE);
-$_COOKIE = array_map('html_deep', $_COOKIE);
-
-function stripslashes_deep($value) {
-    
-   $value = is_array($value) ?
-               array_map('stripslashes_deep', $value) :
-               stripslashes($value);
-   return $value;
-   
-}
-
-function addslashes_deep($value) {
-    
-   $value = is_array($value) ?
-               array_map('addslashes_deep', $value) :
-               addslashes($value);
-   return $value;
-   
-}
-
-function html_deep($value) {
-    
-   $value = is_array($value) ?
-               array_map('html_deep', $value) :
-               htmlspecialchars($value);
-   return $value;
-   
-}
-
 function opendb() { // Open database connection.
 
     include('config.php');
@@ -76,21 +33,30 @@ function doquery($query, $table) { // Something of a tiny little database abstra
 
 }
 
-function gettemplate($templatename) { // SQL query for the template.
+/**
+ * Retrieve a template from the template directory
+ */
+function gettemplate(string $template) {
+    $path = 'templates/' . $template . '.php';
 
-    $filename = "templates/" . $templatename . ".php";
-    include("$filename");
-    return $template;
-    
+    if (!is_readable($path)) {
+        throw new Exception('Unable to get template <<' . $template . '>>');
+    }
+
+    return file_get_contents($path);
 }
 
-function parsetemplate($template, $array) { // Replace template with proper content.
-    
-    foreach($array as $a => $b) {
-        $template = str_replace("{{{$a}}}", $b, $template);
-    }
-    return $template;
-    
+/**
+ * Parse a template with all the correct data
+ */
+function parsetemplate($template, $array) {
+    return preg_replace_callback(
+        '/{{\s*([A-Za-z0-9_-]+)\s*}}/',
+        function($match) use ($array) {
+            return isset($array[$match[1]]) ? $array[$match[1]] : $match[0];
+        },
+        $template
+    );
 }
 
 function getmicrotime() { // Used for timing script operations.
@@ -100,34 +66,37 @@ function getmicrotime() { // Used for timing script operations.
 
 }
 
-function prettydate($uglydate) { // Change the MySQL date format (YYYY-MM-DD) into something friendlier.
+/**
+ * Format MySQL datetime stamps into something friendlier
+ */
+function prettydate($uglydate) {
+    $date = new DateTime($uglydate);
 
-    return date("F j, Y", mktime(0,0,0,substr($uglydate, 5, 2),substr($uglydate, 8, 2),substr($uglydate, 0, 4)));
-
+    return $date->format('F j, Y');
 }
 
-function prettyforumdate($uglydate) { // Change the MySQL date format (YYYY-MM-DD) into something friendlier.
-
-    return date("F j, Y", mktime(0,0,0,substr($uglydate, 5, 2),substr($uglydate, 8, 2),substr($uglydate, 0, 4)));
-
+/**
+ * Alias for prettydate()
+ */
+function prettyforumdate($uglydate) {
+    prettydate($uglydate);
 }
 
-function is_email($email) { // Thanks to "mail(at)philipp-louis.de" from php.net!
-
-    return(preg_match("/^[-_.[:alnum:]]+@((([[:alnum:]]|[[:alnum:]][[:alnum:]-]*[[:alnum:]])\.)+(ad|ae|aero|af|ag|ai|al|am|an|ao|aq|ar|arpa|as|at|au|aw|az|ba|bb|bd|be|bf|bg|bh|bi|biz|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|com|coop|cr|cs|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|edu|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gh|gi|gl|gm|gn|gov|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|in|info|int|io|iq|ir|is|it|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mil|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|museum|mv|mw|mx|my|mz|na|name|nc|ne|net|nf|ng|ni|nl|no|np|nr|nt|nu|nz|om|org|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|pro|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)$|(([0-9][0-9]?|[0-1][0-9][0-9]|[2][0-4][0-9]|[2][5][0-5])\.){3}([0-9][0-9]?|[0-1][0-9][0-9]|[2][0-4][0-9]|[2][5][0-5]))$/i",$email));
-
+/**
+ * Validate the formatting of an email address
+ */
+function is_email(string $email)
+{
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
-function makesafe($d) {
-    
-    $d = str_replace("\t","",$d);
-    $d = str_replace("<","&#60;",$d);
-    $d = str_replace(">","&#62;",$d);
-    $d = str_replace("\n","",$d);
-    $d = str_replace("|","??",$d);
-    $d = str_replace("  "," &nbsp;",$d);
-    return $d;
-    
+/**
+ * Ensure no XSS attacks can occur by sanitizing strings
+ * However, this doesn't prevent some JS eval() attacks
+ */
+function makesafe(string $string)
+{
+    return htmlentities($string, ENT_QUOTES);
 }
 
 function admindisplay($content, $title) { // Finalize page and output to browser.
@@ -282,10 +251,7 @@ function display($content, $title, $topnav=true, $leftnav=true, $rightnav=true, 
         "build"=>$build);
     $page = parsetemplate($template, $finalarray);
     $page = $xml . $page;
-
+    
     echo $page;
     die();
-    
 }
-
-?>
